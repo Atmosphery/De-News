@@ -15,7 +15,7 @@ const getPath = () => {
 }
 
 export class Index extends Component {
-    gun: IGun
+    gun: Gun
     constructor(props: any) {
     super(props); { 
       this.gun=Gun(getPath+'/gun');
