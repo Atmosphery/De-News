@@ -5,12 +5,12 @@ interface IHome {
   gun: IGunInstance<any>
 }
 
-const Home = (param1: IGun) =>{
+function Home(props: {gun: IGun}) {
 
   return (
-    `<div>
-      <h1>Home Component</h1>
-    </div>`
+    <div>
+      <h1>{'De-News!'}</h1>
+    </div>
     );
 };
 

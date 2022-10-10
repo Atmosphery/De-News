@@ -8,14 +8,13 @@ import {useRouter} from 'next/router';
 import Home from './Home';
 
 
-
 const getPath = () => {
   const router = useRouter()
   return router.pathname;
 }
 
 export class Index extends Component {
-    gun: Gun
+    gun: any
     constructor(props: any) {
     super(props); { 
       this.gun=Gun(getPath+'/gun');
@@ -24,10 +23,6 @@ export class Index extends Component {
   }
   
   
-
-
-  
-
   render() {
     return (
       <Home gun={this.gun} />
