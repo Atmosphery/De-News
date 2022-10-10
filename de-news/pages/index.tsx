@@ -1,45 +1,40 @@
-import type { NextPage } from 'next'
+import type { GetServerSideProps,NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
-import GUN from 'gun/gun'
-const qs = require('querystring')
+import { Component } from 'react'
+import Gun, { IGun } from 'gun'
+import {useRouter} from 'next/router';
+import Home from './Home';
 
-const gun = GUN({
-  peers: ['http://localhost:8765/'] // Put the relay node that you want here
-});
 
-export default class Index extends React.Component {
-  constructor (props: any) {
-    super(props)
-    this.state = {
-      number: 0
+
+const getPath = () => {
+  const router = useRouter()
+  return router.pathname;
+}
+
+export class Index extends Component {
+    gun: IGun
+    constructor(props: any) {
+    super(props); { 
+      this.gun=Gun(getPath+'/gun');
+       //To have access to gun object in browser console
     }
-    this.handleAddOne = this.handleAddOne.bind(this)
-    this.handleSubtractOne = this.handleSubtractOne.bind(this)
-  } 
-}
-
-handleAddOne(){
-  const board 
-}
-
-
-const Home: NextPage = () => {
+  }
   
   
-  return (
-    
-    <div className={styles.container}>
-      <form>
-        <input>
-        <button>Add</button>
-        </input>
-      </form>
 
-      <ul></ul>
-    </div>
-  )
+
+  
+
+  render() {
+    return (
+      <Home gun={this.gun} />
+    );
+  }
 }
 
-export default Home
+
+export default Index;
+
