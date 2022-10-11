@@ -7,6 +7,7 @@ import Gun, { IGun } from 'gun'
 import {useRouter} from 'next/router';
 import Home from './Home';
 import AppBar from './appBar';
+import PostToGun from './PostToGun';
 
 
 const getPath = () => {
@@ -19,16 +20,19 @@ export class Index extends Component {
     constructor(props: any) {
     super(props); { 
       this.gun=Gun('localhost:8765');
+      
        //To have access to gun object in browser console
     }
   }
-  gun
+  
   
   render() {
     return (
       <div>
       <AppBar />
       <Home gun={this.gun} />
+      <PostToGun  />
+
       </div>
       
     );
