@@ -16,7 +16,7 @@ export default class Index extends React.Component {
   }
 
   async componentDidMount () {
-    const query = qs.parse(window.location.search.replace('?', ''))
+    const query = URL(window.location.search.replace('?', ''))
     const board = query.board || Math.random().toString(36).slice(2)
     const location = /board/.test(window.location) ? window.location : `${window.location}?board=${board}`
     this.setState({ board: board, location: location })

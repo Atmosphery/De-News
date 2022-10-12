@@ -11,7 +11,7 @@ import PostToGun from './PostToGun';
 
 
 export class Index extends Component {
-    gun: any
+  gun: any
   constructor(props: any) {
     super(props); { 
       this.gun=Gun('localhost:8765');
@@ -34,7 +34,7 @@ export class Index extends Component {
       <div>
       <AppBar />
       <Home gun={this.gun} />
-      
+      <PostToGun gun={this.gun} />
 
       </div>
       
