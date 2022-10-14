@@ -26,7 +26,7 @@ export class Index extends Component {
 
   
   insertDB = () => {
-
+    
   }
 
   render() {
