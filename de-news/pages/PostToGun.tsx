@@ -8,6 +8,7 @@ import Article from './Article';
 import { getEnabledCategories } from 'trace_events';
 import { createRoot } from 'react-dom/client';
 import { rootCertificates } from 'tls';
+import _ from 'lodash';
 
 interface FormElements extends HTMLFormControlsCollection {
     id: HTMLInputElement;
@@ -57,10 +58,7 @@ class PostToGun extends Component<IProps, IState> {
     }
 
     componentDidMount() {
-        
-        // this.gun.get('articles').get().map(_article => _article.id === 0? _article: undefined).once((_article, id) => {
-        //     this.setState({article: _article})
-        // })
+        this.gun.get('articles').on();
     }
 
 
@@ -99,7 +97,9 @@ class PostToGun extends Component<IProps, IState> {
             .get('articles')
             .get(this.state.article.id)
             .put(this.state.article)
-            .on(this.handleChange);
+            .on((data:any, key:string) =>{
+                console.log(data);
+            });
         
         event.preventDefault();
     }
@@ -135,7 +135,7 @@ class PostToGun extends Component<IProps, IState> {
                 </form>
 
                 <div>
-                    <Article article={this.checkValue()} />
+                    <Article article={this.state.article} />
                 </div>
             </div>
         );
