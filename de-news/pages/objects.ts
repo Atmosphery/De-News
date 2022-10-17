@@ -1,5 +1,5 @@
 export interface IArticle {
-    id: number
+    id: string
     title: string;
     text: string;
     author: string;
@@ -9,3 +9,4 @@ export interface IArticle {
 export interface IUser {
     id: string;
 }
+

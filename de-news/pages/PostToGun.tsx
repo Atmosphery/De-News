@@ -1,10 +1,10 @@
 import exp from 'constants';
-import Gun, { GunCallbackPut, GunDataNode, IGun, IGunInstance } from 'gun';
+import Gun, { IGunInstance } from 'gun';
 
 import React, { Component, EventHandler, FormEvent } from 'react';
 import * as obj from './objects';
 import Article from './Article';
-const not = require('gun/lib/not.js');
+//import not from 'gun/lib/not.js';
 import { getEnabledCategories } from 'trace_events';
 import { createRoot } from 'react-dom/client';
 import { rootCertificates } from 'tls';
@@ -26,7 +26,8 @@ interface IProps {
 }
 
 interface IState {
-    article: obj.IArticle
+    article: obj.IArticle,
+    currentId: number
 }
 
 
@@ -41,17 +42,18 @@ class PostToGun extends Component<IProps, IState> {
 
         this.state = {
             article: {
-                id: 0,
+                id: '',
                 title: '',
                 text: '',
                 author: '',
                 date: ''
-            }
+            },
+            currentId: 0
             //this.gun.get('articles').map(article => article.id === 0? article: undefined).once()
         }
 
         this.saveArticle = this.saveArticle.bind(this);
-        //this.handleChange = this.handleChange.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
 
     componentDidMount() {
@@ -70,7 +72,7 @@ class PostToGun extends Component<IProps, IState> {
     checkValue() {
         //debugger
         return this.gun
-        .get('articles').get(this.state.article.id.toString()).on((data: any, key: string) => {
+        .get('articles').get('0').on((data: any, key: string) => {
             console.log(data)
             console.log(key)
 
@@ -81,7 +83,7 @@ class PostToGun extends Component<IProps, IState> {
         //debugger
         this.setState({
             article: {
-                id: 0,
+                id: this.state.currentId.toString(),
                 title: event.currentTarget.elements.title.value,
                 text: event.currentTarget.elements.text.value,
                 author: event.currentTarget.elements.author.value,
@@ -89,37 +91,17 @@ class PostToGun extends Component<IProps, IState> {
 
             }
         })
+        let addOne:number = this.state.currentId;
+        this.setState({currentId: addOne++}) 
+        
 
-        let tempArticle = this.state.article;
         this.gun
             .get('articles')
-            //for each through 'articles' node
-            .map((article: obj.IArticle) => {
-                let lastIndex: number = 0;
-                if (article === undefined) {
-                    tempArticle.id = lastIndex;
-                    this.setState({ article: tempArticle })
-                    this.put({
-                        id: this.state.article.id,
-                        title: this.state.article.title,
-                        text: this.state.article.text,
-                        author: this.state.article.author,
-                        date: this.state.article.date,
-                    });
-                } else {
-                    lastIndex = article.id;
-                }
-
-            })
-
+            .get(this.state.article.id)
+            .put(this.state.article)
+            .on(this.handleChange);
         
         event.preventDefault();
-
-        // const root = createRoot(document.getElementById('article')!)
-
-        // root.render(
-        //     <Article article={this.state.article} />
-        // )
     }
 
 
