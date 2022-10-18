@@ -7,7 +7,7 @@ import AppBar from './appBar';
 
 
 
-const gun: IGunInstance = Gun('233.255.255.255:8765');
+const gun: IGunInstance = Gun('localhost:8765');
 
 
 export class Index extends Component {
