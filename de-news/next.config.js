@@ -12,6 +12,14 @@ module.exports = (phase, { defaultConfig }) => {
 module.exports = {
   webpack: function (config, options) {
     config.module.noParse = /gun\.js$/;
+    config.module.noParse = /gun\\sea\.js$/;
     return config;
   },
 };
+
+// module.exports = {
+//   webpack: function (config, options) {
+//     config.module.noParse = /sea\.js$/;
+//     return config;
+//   },
+// };

@@ -1,13 +1,9 @@
-import exp from 'constants';
-import Gun, { IGunInstance } from 'gun';
+import { IGunInstance } from 'gun';
 
-import React, { Component, EventHandler, FormEvent } from 'react';
+import React, { Component, FormEvent } from 'react';
 import * as obj from './objects';
 import Article from './Article';
 //import not from 'gun/lib/not.js';
-import { getEnabledCategories } from 'trace_events';
-import { createRoot } from 'react-dom/client';
-import { rootCertificates } from 'tls';
 import _ from 'lodash';
 
 interface FormElements extends HTMLFormControlsCollection {
@@ -27,8 +23,8 @@ interface IProps {
 }
 
 interface IState {
-    article: obj.IArticle,
-    currentId: number
+    article: obj.IArticle
+    currentId: string
 }
 
 
@@ -49,7 +45,7 @@ class PostToGun extends Component<IProps, IState> {
                 author: '',
                 date: ''
             },
-            currentId: 0
+            currentId: ''
             //this.gun.get('articles').map(article => article.id === 0? article: undefined).once()
         }
 
@@ -58,49 +54,51 @@ class PostToGun extends Component<IProps, IState> {
     }
 
     componentDidMount() {
-        this.gun.get('articles').on();
+        //debugger
+        // this.gun.get('articles').get(this.state.currentId.toString()).on((data:any, key:string) => {
+        //     this.setState({article: data})
+        // });
+
+        
     }
 
 
     handleChange(event: FormEvent) {
-        
-        
-    }
-    
-    checkValue() {
-        //debugger
-        return this.gun
-        .get('articles').get('0').on((data: any, key: string) => {
-            console.log(data)
-            console.log(key)
 
-        })
+
     }
+
+
 
     saveArticle = (event: FormEvent<MyFormElement>) => {
+
         //debugger
         this.setState({
+
             article: {
-                id: this.state.currentId.toString(),
+                id: event.currentTarget.id,
                 title: event.currentTarget.elements.title.value,
                 text: event.currentTarget.elements.text.value,
                 author: event.currentTarget.elements.author.value,
                 date: new Date().toString()
-
-            }
+            },
+            currentId: event.currentTarget.id
         })
-        let addOne:number = this.state.currentId;
-        this.setState({currentId: addOne++}) 
         
+
+
 
         this.gun
             .get('articles')
-            .get(this.state.article.id)
-            .put(this.state.article)
-            .on((data:any, key:string) =>{
-                console.log(data);
-            });
-        
+            .set(this.state.article, (ack: any) => {
+                if (ack.err) {
+                    console.log('An error happened while inserting')
+                    console.log(ack.err);
+                }
+                console.log('Data Sucessfully inserted' +
+                    `\ntitle: ${this.state.article.title}`)
+            })
+
         event.preventDefault();
     }
 

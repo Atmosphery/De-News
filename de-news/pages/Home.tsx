@@ -2,7 +2,7 @@ import { IGun, IGunInstance } from 'gun';
 import React, { Component } from 'react';
 
 
-const Home = (props: {gun: IGunInstance}) => {
+const Home = () => {
 
   
   return (

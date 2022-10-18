@@ -3,23 +3,23 @@ import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
 import { Component } from 'react'
-import Gun, { GunNodePut, IGun, IGunInstance } from 'gun'
-
-
-import { useRouter } from 'next/router';
+import Gun from 'gun/gun'
+import { IGunInstance, IGunUserInstance } from 'gun/types'
+require('gun/sea');
 import Home from './Home';
 import AppBar from './appBar';
 import PostToGun from './PostToGun';
 
 
 
+const gun:IGunInstance = Gun('233.255.255.255:8765');
+
 
 export class Index extends Component {
-  gun: IGunInstance
+  user:IGunUserInstance;  
   constructor(props: any) {
     super(props); {
-      this.gun = Gun('233.255.255.255:8765');
-      
+      this.user = gun.user()
       //window.Gun = this.gun;
     }
   }
@@ -27,8 +27,12 @@ export class Index extends Component {
 
   //Where you do inital loading
   async componentDidMount() {
-    this.gun.get('test').get('testdata').put({title: 'this is a title', author:'Mr.Gibbins'});
-    this.gun.get('test').get('testdata').on((data:any, key:any) =>{
+    //this.user = gun.user();
+    //('alias', ''pass', 'callback', 'options')
+    
+    
+    gun.get('test').get('testdata').put({title: 'this is a title', author:'Mr.Gibbins'});
+    gun.get('test').get('testdata').on((data:any, key:any) =>{
       console.log(data, key);
     })
   }
@@ -40,8 +44,8 @@ export class Index extends Component {
     return (
       <div className='m-10'>
         <AppBar />
-        <Home gun={this.gun} />
-        <PostToGun gun={this.gun} />
+        <Home />
+        <PostToGun gun={gun} />
 
       </div>
 
