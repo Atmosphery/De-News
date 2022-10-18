@@ -5,6 +5,7 @@ import * as obj from './objects';
 import Article from './Article';
 //import not from 'gun/lib/not.js';
 import _ from 'lodash';
+import AppBar from './appBar';
 
 interface FormElements extends HTMLFormControlsCollection {
     id: HTMLInputElement;
@@ -17,10 +18,7 @@ interface MyFormElement extends HTMLFormElement {
     readonly elements: FormElements
 }
 
-interface IProps {
-    gun: IGunInstance;
 
-}
 
 interface IState {
     article: obj.IArticle
@@ -28,14 +26,14 @@ interface IState {
 }
 
 
-class PostToGun extends Component<IProps, IState> {
+class create_article extends Component<IState> {
     gun: IGunInstance;
 
 
-    constructor(props: IProps) {
+    constructor(props:any) {
         super(props);
-
-        this.gun = props.gun;
+        this.gun = Gun('233.255.255.255:8765');
+        
 
         this.state = {
             article: {
@@ -46,7 +44,6 @@ class PostToGun extends Component<IProps, IState> {
                 date: ''
             },
             currentId: ''
-            //this.gun.get('articles').map(article => article.id === 0? article: undefined).once()
         }
 
         this.saveArticle = this.saveArticle.bind(this);
@@ -58,8 +55,6 @@ class PostToGun extends Component<IProps, IState> {
         // this.gun.get('articles').get(this.state.currentId.toString()).on((data:any, key:string) => {
         //     this.setState({article: data})
         // });
-
-        
     }
 
 
@@ -84,7 +79,7 @@ class PostToGun extends Component<IProps, IState> {
             },
             currentId: event.currentTarget.id
         })
-        
+
 
 
 
@@ -108,37 +103,41 @@ class PostToGun extends Component<IProps, IState> {
 
     render() {
         return (
-            <div>
-                <form onSubmit={this.saveArticle}>
-                    <div>
-                        <label>Title</label><br />
-                        <input name='title' className='border-2 border-style: solid border-black' />
-                    </div>
-
-                    <div>
-                        <label>Text</label><br />
-                        <input name='text' className='border-2 border-style: solid border-black' />
-                    </div>
-
-                    <div>
-                        <label>Author</label><br />
-                        <input name='author' className='border-2 border-style: solid border-black' />
-                    </div>
-
-
-
-                    <div>
-                        <button className='border-2 border-style: dotted border-black mt-3'>Add</button>
-                    </div>
-                </form>
-
+            <main>
+                <AppBar barTitle='Publish' />
                 <div>
-                    <Article article={this.state.article} />
+                    <form onSubmit={this.saveArticle}>
+                        <div>
+                            <label>Title</label><br />
+                            <input name='title' className='border-2 border-style: solid border-black' />
+                        </div>
+
+                        <div>
+                            <label>Text</label><br />
+                            <input name='text' className='border-2 border-style: solid border-black' />
+                        </div>
+
+                        <div>
+                            <label>Author</label><br />
+                            <input name='author' className='border-2 border-style: solid border-black' />
+                        </div>
+
+
+
+                        <div>
+                            <button className='border-2 border-style: dotted border-black mt-3'>Add</button>
+                        </div>
+                    </form>
+
+                    <div>
+                        <Article article={this.state.article} />
+                    </div>
                 </div>
-            </div>
+            </main>
+
         );
     }
 
 }
-export default PostToGun;
+export default create_article;
 

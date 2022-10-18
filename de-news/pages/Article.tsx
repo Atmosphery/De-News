@@ -1,6 +1,6 @@
 import Gun, { GunCallbackPut, GunDataNode, IGun } from 'gun';
 import React, { Component } from 'react';
-import PostToGun from './PostToGun';
+import create_article from './create_article';
 import * as obj from './objects';
 
 

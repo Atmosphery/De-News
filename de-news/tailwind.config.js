@@ -1,3 +1,5 @@
+const colorNames = require('daisyui/src/colors/colorNames');
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -7,5 +9,5 @@ module.exports = {
   theme: {
     extend: {},
   },
-  plugins: [],
+  plugins: [require("daisyui")],
 }
