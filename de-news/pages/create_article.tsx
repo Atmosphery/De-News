@@ -26,14 +26,14 @@ interface IState {
 }
 
 
-class create_article extends Component<IState> {
+class create_article extends Component<{}, IState> {
     gun: IGunInstance;
 
 
-    constructor(props:any) {
+    constructor(props: any) {
         super(props);
         this.gun = Gun('233.255.255.255:8765');
-        
+
 
         this.state = {
             article: {
@@ -51,10 +51,9 @@ class create_article extends Component<IState> {
     }
 
     componentDidMount() {
-        //debugger
-        // this.gun.get('articles').get(this.state.currentId.toString()).on((data:any, key:string) => {
-        //     this.setState({article: data})
-        // });
+        if (this.gun === undefined) {
+            this.gun = Gun('233.255.255.255:8765');
+        }
     }
 
 
@@ -104,34 +103,32 @@ class create_article extends Component<IState> {
     render() {
         return (
             <main>
-                <AppBar barTitle='Publish' />
-                <div>
+                <AppBar title='Publish' />
+                <div className='m-10 '>
                     <form onSubmit={this.saveArticle}>
                         <div>
                             <label>Title</label><br />
-                            <input name='title' className='border-2 border-style: solid border-black' />
+                            <input name='title' className='input input-bordered w-full max-w-sm' />
                         </div>
 
-                        <div>
+                        <div className='my-5'>
                             <label>Text</label><br />
-                            <input name='text' className='border-2 border-style: solid border-black' />
+                            <input name='text' className='input input-bordered w-full max-w-sm' />
                         </div>
 
                         <div>
                             <label>Author</label><br />
-                            <input name='author' className='border-2 border-style: solid border-black' />
+                            <input name='author' className='input input-bordered w-full max-w-sm' />
                         </div>
-
-
 
                         <div>
                             <button className='border-2 border-style: dotted border-black mt-3'>Add</button>
                         </div>
                     </form>
+                </div>
 
-                    <div>
-                        <Article article={this.state.article} />
-                    </div>
+                <div>
+                    <Article article={this.state.article} />
                 </div>
             </main>
 

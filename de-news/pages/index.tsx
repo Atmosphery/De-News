@@ -11,6 +11,7 @@ const gun: IGunInstance = Gun('localhost:8765');
 
 
 export class Index extends Component {
+  
   user: IGunUserInstance;
   constructor(props: any) {
     super(props); {
@@ -18,7 +19,14 @@ export class Index extends Component {
     }
   }
 
-
+  checkLogin = () => {
+    
+    if (this.user.is) {
+      console.log('You are logged in');
+   } else {
+      console.log('You are not logged in');
+   }
+  }
   //Where you do inital loading
   async componentDidMount() {
     
@@ -27,9 +35,11 @@ export class Index extends Component {
   render() {
     return (
       <main>
-        <AppBar barTitle='Menu' />
-        <div className='m-10 flex justify-center'>
+        
+        <AppBar title='Home'/>
+        <div className='m-10 flex justify-start'>
           <Home />
+          <button className='btn' onClick={this.checkLogin}>Check</button>
         </div>
 
       </main>

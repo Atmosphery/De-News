@@ -2,6 +2,7 @@ import { Component, FormEvent, ReactNode } from "react";
 import Gun from 'gun/gun';
 require('gun/sea');
 import { IGunInstance, IGunUserInstance } from 'gun/types'
+import AppBar from "./appBar";
 
 
 const gun: IGunInstance = Gun('233.255.255.255:8765');
@@ -30,24 +31,31 @@ class Login extends Component {
         this.user.auth(elements.username.value, elements.password.value, (ack: any) => {
             console.log(ack);
         });
+
+        if (this.user.is) {
+            console.log('You are logged in');
+         } else {
+            console.log('You are not logged in');
+         }
     }
 
 
     render(): ReactNode {
         return (
             <main>
+                <AppBar title='Login' />
                 <div className="m-5">
                     <form onSubmit={this.login}>
                         <div>
                             <label>Username</label><br />
-                            <input name="username" className='border-2 border-style: solid border-black' />
+                            <input name="username" className='input input-bordered max-w-xs' />
                         </div>
                         <div>
                             <label>Password</label><br />
-                            <input type='password' name="password" className='border-2 border-style: solid border-black' />
+                            <input type='password' name="password" className='input input-bordered max-w-xs' />
                         </div>
                         <div>
-                            <button className='border-2 border-style: dotted border-black mt-3 p-1'>Login</button>                        </div>
+                            <button className='btn mt-4'>Login</button>                        </div>
                     </form>
                 </div>
             </main>
