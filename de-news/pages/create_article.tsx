@@ -5,7 +5,7 @@ import * as obj from './objects';
 import Article from './Article';
 //import not from 'gun/lib/not.js';
 import _ from 'lodash';
-import AppBar from './appBar';
+import AppBar from './components/appBar';
 
 interface FormElements extends HTMLFormControlsCollection {
     id: HTMLInputElement;
@@ -52,7 +52,7 @@ class create_article extends Component<{}, IState> {
 
     componentDidMount() {
         if (this.gun === undefined) {
-            this.gun = Gun('233.255.255.255:8765');
+            this.gun = Gun(process.env.GunDbStr_dev);
         }
     }
 

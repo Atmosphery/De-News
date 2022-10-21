@@ -30,8 +30,8 @@ class Signup extends Component {
         this.user.create(elements.username.value, elements.password.value, (ack: any) => {
             console.log(ack);
         });
-        this.user.auth(elements.username.value, elements.password.value, (ack:any) => {
-            if(ack.err === undefined){
+        this.user.auth(elements.username.value, elements.password.value, (ack: any) => {
+            if (ack.err === undefined) {
                 console.log('logged in successfully')
             }
         });

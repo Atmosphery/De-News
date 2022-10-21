@@ -2,7 +2,7 @@ import { Component, FormEvent, ReactNode } from "react";
 import Gun from 'gun/gun';
 require('gun/sea');
 import { IGunInstance, IGunUserInstance } from 'gun/types'
-import AppBar from "./appBar";
+import AppBar from "./components/appBar";
 
 
 const gun: IGunInstance = Gun('233.255.255.255:8765');
@@ -34,9 +34,9 @@ class Login extends Component {
 
         if (this.user.is) {
             console.log('You are logged in');
-         } else {
+        } else {
             console.log('You are not logged in');
-         }
+        }
     }
 
 
