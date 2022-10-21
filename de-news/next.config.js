@@ -6,20 +6,18 @@ module.exports = (phase, { defaultConfig }) => {
     reactStrictMode: true,
     swcMinify: true,
   }
-  
+
   return nextConfig
 }
 
 module.exports = {
   webpack: function (config, options) {
     //config.module.noParse = /gun\\gun\.js$/;
-    config.module.noParse = '/gun\\sea\.js$/';
-    config.module.noParse = '/gun\.js$/';
-    
-
+    config.module.noParse = '/gun/gun$/';
+    config.module.noParse = '/gun/sea$/';
     return config;
   },
-  
-  
+
+
 };
 

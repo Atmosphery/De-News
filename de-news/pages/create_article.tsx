@@ -1,4 +1,6 @@
-import { IGunInstance } from 'gun';
+
+import Gun from 'gun'
+import { IGunInstance } from 'gun/types';
 
 import React, { Component, FormEvent } from 'react';
 import * as obj from './objects';

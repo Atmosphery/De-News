@@ -1,7 +1,10 @@
 import { Component } from 'react'
-import Gun from 'gun';
-import { IGunInstance, IGunUserInstance } from 'gun/types'
+const Gun = require('gun/gun');
+//import Gun from 'gun'
 require('gun/sea');
+
+import { IGunInstance, IGunUserInstance } from 'gun/types'
+
 import Home from './Home';
 import AppBar from './components/appBar';
 
@@ -11,6 +14,8 @@ import AppBar from './components/appBar';
 
 
 const gun: IGunInstance = Gun(process.env.db_dev)
+//const gun: IGunInstance = Gun('localhost:8765')
+
 
 
 export class Index extends Component {
@@ -40,7 +45,7 @@ export class Index extends Component {
     return (
       <main>
 
-        <AppBar title='Home' />
+        <AppBar title='Home' user={this.user} />
         <div className='m-10 flex justify-start'>
           <Home />
           <button className='btn' onClick={this.checkLogin}>Check</button>

@@ -2,6 +2,7 @@ import { Component, FormEvent, ReactNode } from "react";
 import Gun from 'gun/gun';
 require('gun/sea');
 import { GunCallbackGet, GunCallbackUserAuth, IGunInstance, IGunUserInstance } from 'gun/types'
+import AppBar from "./components/appBar";
 
 
 const gun: IGunInstance = Gun('233.255.255.255:8765');
@@ -41,8 +42,9 @@ class Signup extends Component {
     render(): ReactNode {
         return (
             <main>
+                <AppBar title="Sign Up" />
                 <div className="m-5">
-                    <h1>Create an Account</h1>
+                    
                     <form onSubmit={this.signup}>
                         <div>
                             <label>Username</label><br />
