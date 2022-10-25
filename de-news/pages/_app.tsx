@@ -1,22 +1,21 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
-import { useState } from 'react'
-import { IGunInstance } from 'gun';
+import { useEffect, useState } from 'react'
+import Gun from 'gun';
+import Layout from './components/layout';
+import { initializeGun } from './api/GunApi'
+
 
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const [gun, setGun] = useState(Gun(process.env.db_dev));
-  const [user, setUser] = useState(gun.user());
-  user.recall({sessionStorage: true})
-  
+  initializeGun();
 
   return (
-    <Component 
-      {...pageProps}
-      gun = {gun}
-      user = {user}
-      setUser = {setUser}
-    />
+    <Layout>
+      <Component
+        {...pageProps}
+      />
+    </Layout>
   )
 
 }

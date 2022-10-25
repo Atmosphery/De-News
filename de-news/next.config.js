@@ -14,7 +14,7 @@ module.exports = {
   // module:{
   //   noParse: /gun\.js$/,
   // },
-
+  
   webpack: (config, options) => {
     config.module.noParse = [/gun\.js$/, /sea\.js$/];
     return config;

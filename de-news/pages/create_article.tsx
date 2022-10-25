@@ -106,7 +106,6 @@ class create_article extends Component<{}, IState> {
     render() {
         return (
             <main>
-                <AppBar title='Publish' user={this.gun.user()} />
                 <div className='m-10 '>
                     <form onSubmit={this.saveArticle}>
                         <div>

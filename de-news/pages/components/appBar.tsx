@@ -9,8 +9,7 @@ import { HiMenuAlt1 } from 'react-icons/hi'
 import { checkLogin } from '../api/GunApi'
 
 interface IProps {
-    title: string,
-    user: IGunUserInstance
+    
 }
 
 interface IState {
@@ -34,10 +33,12 @@ class AppBar extends Component<IProps, IState> {
 
     }
 
+    
+
     componentDidMount(): void {
-        this.props.user.recall({ sessionStorage: true })
         this.setState({loggedIn: checkLogin(this.props.user)})
     }
+    
 
     handleLogin = () => {
         Router.push('/login')
@@ -68,7 +69,7 @@ class AppBar extends Component<IProps, IState> {
                     </Link>
                 </div>
 
-                <div className='navbar-center text-2xl'>{this.props.title}</div>
+                
 
                 <div className='navbar-end'>
                     <div className='dropdown'>

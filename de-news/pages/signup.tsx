@@ -24,7 +24,7 @@ class Signup extends Component {
         super(props);
         this.gun = Gun(process.env.db_dev);
         this.user = this.gun.user().recall({ sessionStorage: true });
-        
+
     }
 
     signup = (event: FormEvent<MyFormElement>) => {
@@ -45,7 +45,7 @@ class Signup extends Component {
     render(): ReactNode {
         return (
             <main>
-                <AppBar title="Sign Up" user={this.user} />
+
                 <div className="m-5">
 
                     <form onSubmit={this.signup}>
