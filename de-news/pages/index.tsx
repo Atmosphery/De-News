@@ -12,16 +12,18 @@ import { checkLogin } from './api/GunApi'
 import { getGun } from './api/GunApi';
 
 
-
+interface IProps {
+  
+}
 
 
 //const gun: IGunInstance = Gun('localhost:8765')
 
-export const Index = () => {
+export const Index = ({gun, user, setUser}) => {
 
 
-  const gun: IGunInstance = Gun(process.env.db_dev)
-  const user: IGunUserInstance = gun.user().recall({sessionStorage:true});
+  //const gun: IGunInstance = Gun(process.env.db_dev)
+  //const user: IGunUserInstance = gun.user().recall({sessionStorage:true});
   
   
 
