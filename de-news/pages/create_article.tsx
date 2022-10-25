@@ -8,6 +8,7 @@ import Article from './Article';
 //import not from 'gun/lib/not.js';
 import _ from 'lodash';
 import AppBar from './components/appBar';
+import { getGun } from './api/GunApi';
 
 interface FormElements extends HTMLFormControlsCollection {
     id: HTMLInputElement;
@@ -34,7 +35,7 @@ class create_article extends Component<{}, IState> {
 
     constructor(props: any) {
         super(props);
-        this.gun = Gun('233.255.255.255:8765');
+        this.gun = Gun(process.env.db_dev);
 
 
         this.state = {
@@ -105,7 +106,7 @@ class create_article extends Component<{}, IState> {
     render() {
         return (
             <main>
-                <AppBar title='Publish' />
+                <AppBar title='Publish' user={this.gun.user()} />
                 <div className='m-10 '>
                     <form onSubmit={this.saveArticle}>
                         <div>

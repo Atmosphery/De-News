@@ -1,60 +1,57 @@
 import { Component } from 'react'
-const Gun = require('gun/gun');
+import Gun from 'gun';
 //import Gun from 'gun'
-require('gun/sea');
+import 'gun/sea';
 
 import { IGunInstance, IGunUserInstance } from 'gun/types'
 
 import Home from './Home';
 import AppBar from './components/appBar';
+import { checkLogin } from './api/GunApi'
 
-//import { getGun } from './api/GunApi';
+import { getGun } from './api/GunApi';
 
 
 
 
-const gun: IGunInstance = Gun(process.env.db_dev)
+
 //const gun: IGunInstance = Gun('localhost:8765')
 
+export const Index = () => {
 
 
-export class Index extends Component {
+  const gun: IGunInstance = Gun(process.env.db_dev)
+  const user: IGunUserInstance = gun.user().recall({sessionStorage:true});
+  
+  
 
 
-  user: IGunUserInstance;
-  constructor(props: any) {
-    super(props); {
-      this.user = gun.user();
-    }
-  }
 
-  checkLogin = () => {
-
-    if (this.user.is) {
-      console.log('You are logged in');
-    } else {
-      console.log('You are not logged in');
-    }
-  }
   //Where you do inital loading
-  async componentDidMount() {
-    this.user.recall({sessionStorage: true});
+
+  const checkLoginHandler = () => {
+    console.log(user.is);
+    
+  
   }
 
-  render() {
-    return (
-      <main>
+  
 
-        <AppBar title='Home' user={this.user} />
-        <div className='m-10 flex justify-start'>
-          <Home />
-          <button className='btn' onClick={this.checkLogin}>Check</button>
-        </div>
 
-      </main>
 
-    );
-  }
+  return (
+    <main>
+
+      <AppBar title='Home' user={user} />
+      <div className='m-10 flex justify-start'>
+        <Home />
+        <button className='btn' onClick={checkLoginHandler}>Check</button>
+      </div>
+
+    </main>
+
+  );
+
 }
 
 

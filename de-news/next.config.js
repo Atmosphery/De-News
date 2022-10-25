@@ -11,13 +11,17 @@ module.exports = (phase, { defaultConfig }) => {
 }
 
 module.exports = {
-  webpack: function (config, options) {
-    //config.module.noParse = /gun\\gun\.js$/;
-    config.module.noParse = '/gun/gun$/';
-    config.module.noParse = '/gun/sea$/';
+  // module:{
+  //   noParse: /gun\.js$/,
+  // },
+
+  webpack: (config, options) => {
+    config.module.noParse = [/gun\.js$/, /sea\.js$/];
     return config;
   },
-
-
 };
+
+
+
+
 

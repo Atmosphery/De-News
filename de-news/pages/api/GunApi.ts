@@ -8,43 +8,35 @@ import { useEffect } from 'react';
 
 let gun: IGunInstance;
 
-let user: IGunUserInstance;
 
-
-
-
-
-
-const confirmLoggedIn = () => {
-    let userSession: any;
-
-    useEffect(() => {
-        userSession = window.sessionStorage.getItem('pair');
-    }, [])
-
-    user.auth(userSession.pub.value, (ack: any) => {
-        console.log(ack);
-    });
-
+export const checkLogin = (user: IGunUserInstance): boolean => {
+    //let user = gun.user();
     if (user.is) {
         console.log('You are logged in');
-    } else {
+        return true
+    }else{
         console.log('You are not logged in');
+        return false
     }
+    
 }
 
-export  function getGun(): IGunInstance {
 
-    if (gun === undefined) {
+
+export const logout = (user: IGunUserInstance) => {
+    user.recall({ sessionStorage: true });
+    user.leave();
+}
+
+
+export function getGun(): IGunInstance {
+    if(gun === undefined){
         gun = Gun(process.env.db_dev);
     }
-    if(user === undefined) {
-        user = gun.user().recall({sessionStorage: true});
-    }
-
     return gun;
-
 }
+
+
 
 
 

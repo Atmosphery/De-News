@@ -1,11 +1,12 @@
 import { Component, FormEvent, ReactNode } from "react";
-import Gun from 'gun/gun';
-require('gun/sea');
+import Gun from 'gun';
+import 'gun/sea';
 import { GunCallbackGet, GunCallbackUserAuth, IGunInstance, IGunUserInstance } from 'gun/types'
 import AppBar from "./components/appBar";
+import { getGun } from "./api/GunApi";
 
 
-const gun: IGunInstance = Gun('233.255.255.255:8765');
+
 
 interface FormElements extends HTMLFormControlsCollection {
     username: HTMLInputElement;
@@ -17,11 +18,13 @@ interface MyFormElement extends HTMLFormElement {
 }
 
 class Signup extends Component {
-
+    gun: IGunInstance
     user: IGunUserInstance
     constructor(props: any) {
         super(props);
-        this.user = gun.user().recall({ sessionStorage: true });
+        this.gun = Gun(process.env.db_dev);
+        this.user = this.gun.user().recall({ sessionStorage: true });
+        
     }
 
     signup = (event: FormEvent<MyFormElement>) => {
@@ -42,9 +45,9 @@ class Signup extends Component {
     render(): ReactNode {
         return (
             <main>
-                <AppBar title="Sign Up" />
+                <AppBar title="Sign Up" user={this.user} />
                 <div className="m-5">
-                    
+
                     <form onSubmit={this.signup}>
                         <div>
                             <label>Username</label><br />

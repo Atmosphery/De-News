@@ -2,33 +2,53 @@ import { IGun, IGunInstance, IGunUserInstance } from 'gun';
 //require('gun/sea');
 import Image from 'next/image';
 import Link from 'next/link';
+import Router from 'next/router';
 import React, { Component } from 'react';
 import { CgProfile } from 'react-icons/cg'
 import { HiMenuAlt1 } from 'react-icons/hi'
+import { checkLogin } from '../api/GunApi'
 
 interface IProps {
     title: string,
     user: IGunUserInstance
 }
 
+interface IState {
+    loggedIn: boolean
+}
 
 
 
-class AppBar extends Component<IProps> {
-    
-   
+
+class AppBar extends Component<IProps, IState> {
+
+    loggedIn: boolean
     constructor(props: IProps) {
         super(props);
-    }
-
-    checkLogin = (user: IGunUserInstance): string => {
-        //let user = gun.user();
-        if (user.is) {
-            return 'login'
+        this.loggedIn = checkLogin(this.props.user);
+        this.state = {
+            loggedIn: this.loggedIn
         }
-        return 'signup'
+        this.handleLogin = this.handleLogin.bind(this);
+        this.handleLogout = this.handleLogout.bind(this);
+
     }
 
+    componentDidMount(): void {
+        this.props.user.recall({ sessionStorage: true })
+        this.setState({loggedIn: checkLogin(this.props.user)})
+    }
+
+    handleLogin = () => {
+        Router.push('/login')
+    }
+
+    handleLogout = () => {
+        this.props.user.leave();
+        this.setState({loggedIn: checkLogin(this.props.user)})
+    }
+
+    
     render() {
         return (
 
@@ -56,7 +76,7 @@ class AppBar extends Component<IProps> {
                             <CgProfile size={35} />
                         </label>
                         <ul tabIndex={0} className='menu dropdown-content rounded-box w-32 mt-3 bg-gray-900'>
-                            <li><Link href={`/${this.checkLogin(this.props.user)}`}>{this.checkLogin(this.props.user)}</Link></li>
+                            <li><button onClick={(this.state.loggedIn) ? this.handleLogout : this.handleLogin}>{(this.state.loggedIn) ? 'Sign out' : 'Login'}</button></li>
                             <li><Link href={'/login'}>Profile</Link></li>
                             <li><Link href={'/login'}>Your Articles</Link></li>
                         </ul>

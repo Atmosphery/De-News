@@ -1,11 +1,12 @@
 import { Component, FormEvent, ReactNode } from "react";
-import Gun from 'gun/gun';
-require('gun/sea');
+import Gun from 'gun';
+import 'gun/sea';
 import { IGunInstance, IGunUserInstance } from 'gun/types'
 import AppBar from "./components/appBar";
+import Router from "next/router";
 
 
-const gun: IGunInstance = Gun('233.255.255.255:8765');
+
 
 interface FormElements extends HTMLFormControlsCollection {
     username: HTMLInputElement;
@@ -17,11 +18,12 @@ interface MyFormElement extends HTMLFormElement {
 }
 
 class Login extends Component {
-
-    user: IGunUserInstance
+    gun: IGunInstance;
+    user: IGunUserInstance;
     constructor(props: any) {
         super(props);
-        this.user = gun.user().recall({ sessionStorage: true });
+        this.gun = Gun(process.env.db_dev)
+        this.user = this.gun.user()
     }
 
     login = (event: FormEvent<MyFormElement>) => {
@@ -30,20 +32,18 @@ class Login extends Component {
         let elements = event.currentTarget.elements;
         this.user.auth(elements.username.value, elements.password.value, (ack: any) => {
             console.log(ack);
-        });
 
-        if (this.user.is) {
-            console.log('You are logged in');
-        } else {
-            console.log('You are not logged in');
-        }
+        });
+        Router.push('/')
     }
+
+
 
 
     render(): ReactNode {
         return (
             <main>
-                <AppBar title='Login' />
+                <AppBar title='Login' user={this.user} />
                 <div className="m-5">
                     <form onSubmit={this.login}>
                         <div>
@@ -55,7 +55,8 @@ class Login extends Component {
                             <input type='password' name="password" className='input input-bordered max-w-xs' />
                         </div>
                         <div>
-                            <button className='btn mt-4'>Login</button>                        </div>
+                            <button className='btn mt-4'>Login</button>
+                        </div>
                     </form>
                 </div>
             </main>
