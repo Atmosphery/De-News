@@ -3,53 +3,71 @@ import { IGun, IGunInstance, IGunUserInstance } from 'gun';
 import Image from 'next/image';
 import Link from 'next/link';
 import Router from 'next/router';
-import React, { Component } from 'react';
+import React, { Component, Dispatch, SetStateAction } from 'react';
 import { CgProfile } from 'react-icons/cg'
 import { HiMenuAlt1 } from 'react-icons/hi'
-import { checkLogin } from '../api/GunApi'
+import { IGlobalState } from '../objects';
+import Gun from 'gun'
 
 interface IProps {
-    
+    user: IGunUserInstance
+    loggedIn: boolean
+    setLoggedIn: Dispatch<SetStateAction<boolean>>
 }
 
-interface IState {
-    loggedIn: boolean
-}
 
 
 
 
-class AppBar extends Component<IProps, IState> {
+class AppBar extends Component<IProps> {
 
-    loggedIn: boolean
-    constructor(props: IProps) {
+
+
+    constructor(props: any) {
         super(props);
-        this.loggedIn = checkLogin(this.props.user);
-        this.state = {
-            loggedIn: this.loggedIn
-        }
-        this.handleLogin = this.handleLogin.bind(this);
-        this.handleLogout = this.handleLogout.bind(this);
+
+        this.props.setLoggedIn(this.checkLogin());
+
+        this.checkLogin = this.checkLogin.bind(this)
+        this.Login = this.Login.bind(this);
+        this.Logout = this.Logout.bind(this);
 
     }
 
-    
+    checkLogin = (): boolean => {
+        //let user = gun.user();
+        if (this.props.user.is) {
+            console.log('You are logged in');
+            return true
+        } else {
+            console.log('You are not logged in');
+            return false
+        }
+    }
+
 
     componentDidMount(): void {
-        this.setState({loggedIn: checkLogin(this.props.user)})
+        this.props.user.recall({ sessionStorage: true })
     }
-    
 
-    handleLogin = () => {
+    handleLoginbtnClick = () => {
+        if (this.checkLogin()) {
+            this.Logout()
+        } else {
+            this.Login()
+        }
+    }
+
+    Login = () => {
         Router.push('/login')
     }
 
-    handleLogout = () => {
+    Logout = () => {
         this.props.user.leave();
-        this.setState({loggedIn: checkLogin(this.props.user)})
+        this.props.setLoggedIn(this.checkLogin());
     }
 
-    
+
     render() {
         return (
 
@@ -69,15 +87,15 @@ class AppBar extends Component<IProps, IState> {
                     </Link>
                 </div>
 
-                
+
 
                 <div className='navbar-end'>
                     <div className='dropdown'>
                         <label tabIndex={0} className='btn btn-circle btn-ghost'>
                             <CgProfile size={35} />
                         </label>
-                        <ul tabIndex={0} className='menu dropdown-content rounded-box w-32 mt-3 bg-gray-900'>
-                            <li><button onClick={(this.state.loggedIn) ? this.handleLogout : this.handleLogin}>{(this.state.loggedIn) ? 'Sign out' : 'Login'}</button></li>
+                        <ul tabIndex={0} className='menu dropdown-content rounded-box w-48 mt-3 bg-gray-900'>
+                            <li><button onClick={this.handleLoginbtnClick}>Login/Sign out</button></li>
                             <li><Link href={'/login'}>Profile</Link></li>
                             <li><Link href={'/login'}>Your Articles</Link></li>
                         </ul>

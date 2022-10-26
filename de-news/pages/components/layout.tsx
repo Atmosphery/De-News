@@ -1,16 +1,19 @@
 import gun, { IGunUserInstance } from "gun";
-import { Component, ReactNode, useEffect, useState } from "react";
+import { Component, Dispatch, ReactNode, SetStateAction, useEffect, useState } from "react";
 import AppBar from "./appBar";
 
 interface IProps {
     children: ReactNode
+    user: IGunUserInstance
+    loggedIn: boolean
+    setLoggedIn: Dispatch<SetStateAction<boolean>>
 }
 
-export default function Layout({children}: IProps) {
+export default function Layout({children, user, loggedIn, setLoggedIn}: IProps) {
     
     return (
         <>
-            <AppBar/>
+            <AppBar user={user} loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>
             <main>{children}</main>
         </>
     )

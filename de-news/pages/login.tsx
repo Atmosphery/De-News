@@ -19,7 +19,7 @@ interface MyFormElement extends HTMLFormElement {
     readonly elements: FormElements
 }
 
-const Login = ({ gun, user, setUser }: IGlobalState) => {
+const Login = ({ user}: IGlobalState) => {
     const router = useRouter()
 
     const login = async (event: FormEvent<MyFormElement>)  => {
@@ -27,11 +27,11 @@ const Login = ({ gun, user, setUser }: IGlobalState) => {
 
         let elements = event.currentTarget.elements;
         
-        setUser(await user.auth(elements.username.value, elements.password.value, (ack: any) => {
+        await user.auth(elements.username.value, elements.password.value, (ack: any) => {
             console.log(ack);
-        }));
+        });
         //Router.reload();
-        router.push('/')
+        //router.push('/')
         
     }
 

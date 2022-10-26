@@ -17,6 +17,6 @@ export interface IUser {
 export interface IGlobalState {
     gun: IGunInstance,
     user: IGunUserInstance,
-    setUser: Dispatch<SetStateAction<IGunUserInstance<any, any, any, IGunInstanceRoot<any, IGunInstance<any>>>>>
+    
 }
 
