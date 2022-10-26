@@ -6,7 +6,7 @@ import Router from 'next/router';
 import React, { Component, Dispatch, SetStateAction } from 'react';
 import { CgProfile } from 'react-icons/cg'
 import { HiMenuAlt1 } from 'react-icons/hi'
-import { IGlobalState } from '../objects';
+import { IGlobalState } from '../pages/objects';
 import Gun from 'gun'
 
 interface IProps {
@@ -95,8 +95,8 @@ class AppBar extends Component<IProps> {
                             <CgProfile size={35} />
                         </label>
                         <ul tabIndex={0} className='menu dropdown-content rounded-box w-48 mt-3 bg-gray-900'>
-                            <li><button onClick={this.handleLoginbtnClick}>Login/Sign out</button></li>
-                            <li><Link href={'/login'}>Profile</Link></li>
+                            <li><button onClick={this.handleLoginbtnClick}>{(this.props.loggedIn) ? 'Sign out' : 'Login'}</button></li>
+                            <li><Link href={'/profile'}>Profile</Link></li>
                             <li><Link href={'/login'}>Your Articles</Link></li>
                         </ul>
 

@@ -13,7 +13,6 @@ export default function Layout({children, user, loggedIn, setLoggedIn}: IProps) 
     
     return (
         <>
-            <AppBar user={user} loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>
             <main>{children}</main>
         </>
     )

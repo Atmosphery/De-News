@@ -3,7 +3,7 @@ import type { AppProps } from 'next/app'
 import { useEffect, useState } from 'react'
 import Gun, { IGunInstance, IGunUserInstance } from 'gun';
 import { initializeGun } from './api/GunApi'
-import Layout from './components/layout';
+import Layout from '../components/layout';
 
 
 
@@ -20,6 +20,8 @@ function MyApp({ Component, pageProps }: AppProps) {
         {...pageProps}
         gun={gun}
         user={user}
+        loggedIn={loggedIn}
+        setLoggedIn={setLoggedIn}
       />
     </Layout>
   )

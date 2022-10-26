@@ -7,7 +7,7 @@ import * as obj from './objects';
 import Article from './Article';
 //import not from 'gun/lib/not.js';
 import _ from 'lodash';
-import AppBar from './components/appBar';
+import AppBar from '../components/appBar';
 import { getGun } from './api/GunApi';
 
 interface FormElements extends HTMLFormControlsCollection {

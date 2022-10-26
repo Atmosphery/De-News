@@ -17,6 +17,8 @@ export interface IUser {
 export interface IGlobalState {
     gun: IGunInstance,
     user: IGunUserInstance,
+    loggedIn: boolean,
+    setLoggedIn: Dispatch<SetStateAction<boolean>>
     
 }
 
