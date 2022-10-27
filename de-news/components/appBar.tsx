@@ -65,6 +65,7 @@ class AppBar extends Component<IProps> {
     Logout = () => {
         this.props.user.leave();
         this.props.setLoggedIn(this.checkLogin());
+        Router.push('/');
     }
 
 

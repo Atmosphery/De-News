@@ -36,7 +36,7 @@ const create_article = ({ user,loggedIn,setLoggedIn }: IGlobalState) => {
         var elements = event.currentTarget.elements
 
         article = {
-            id: event.currentTarget.id,
+            id: user.is?.pub as string,
             author: elements.author.value,
             title: elements.title.value,
             date: new Date().toString(),
@@ -86,10 +86,6 @@ const create_article = ({ user,loggedIn,setLoggedIn }: IGlobalState) => {
                         <button className='btn'>Add</button>
                     </div>
                 </form>
-            </div>
-
-            <div>
-                <Article article={article} />
             </div>
         </main>
 
