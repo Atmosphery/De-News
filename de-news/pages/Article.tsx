@@ -1,19 +1,19 @@
 import Gun, { GunCallbackPut, GunDataNode, IGun } from 'gun';
 import React, { Component } from 'react';
 import create_article from './create_article';
-import * as obj from './objects';
+import { IArticle } from './objects';
 
 
 
-const Article = (props: {article: any}) => {
+const Article = (props: IArticle) => {
 
     
         return (
             <div>
-                <h1>{props.article.title}</h1>
-                <div>{props.article.text}</div>
-                <div>{props.article.author}</div>
-                <div>{props.article.date}</div>
+                <h1>{props.title}</h1>
+                <div>{props.text}</div>
+                <div>{props.author}</div>
+                <div>{props.date}</div>
             </div>
         )
     

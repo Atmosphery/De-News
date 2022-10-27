@@ -30,7 +30,7 @@ class Signup extends Component<IGlobalState> {
         event.preventDefault();
         let elements = event.currentTarget.elements;
 
-        this.props.user.create(elements.username.value, elements.password.value, (ack: any) => {
+        this.props.gun.user().create(elements.username.value, elements.password.value, (ack: any) => {
             console.log(ack);
         });
         this.props.user.auth(elements.username.value, elements.password.value, (ack: any) => {
@@ -61,7 +61,7 @@ class Signup extends Component<IGlobalState> {
                         <button className='btn mt-4'>Sign up</button>
                     </div>
                     <div className="mt-5">
-                        <Link href={'/signup'}><a><strong>Already have an account?</strong></a></Link>
+                        <Link href={'/login'}><a><strong>Already have an account?</strong></a></Link>
                     </div>
                 </form>
             </div>

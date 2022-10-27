@@ -6,6 +6,7 @@ import AppBar from "../components/appBar";
 import Router, { useRouter } from "next/router";
 import Link from "next/link";
 import { IGlobalState } from "./objects";
+import { gunzip } from "zlib";
 
 
 
@@ -21,16 +22,15 @@ interface MyFormElement extends HTMLFormElement {
 
 const Login = (props: IGlobalState) => {
     const router = useRouter()
-    let userNode: _GunRoot;
+    let userNode: IGunUserInstance
 
-    const login = async (event: FormEvent<MyFormElement>) => {
+    const login = (event: FormEvent<MyFormElement>) => {
         event.preventDefault();
 
         let elements = event.currentTarget.elements;
-        //left of here/ adding data to user profile nodes
-        await props.user.auth(elements.username.value, elements.password.value, (ack: any) => {
+        
+        props.user.auth(elements.username.value, elements.password.value, (ack: any) => {
             console.log(ack);
-            userNode = props.gun.user(window.sessionStorage.getItem(pair));
             Router.back()
         });
     }

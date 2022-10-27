@@ -19,7 +19,7 @@ import { IGlobalState } from './objects';
 
 //const gun: IGunInstance = Gun('localhost:8765')
 //{gun, user, setUser}: IProps
-const Index = ({ gun, user, loggedIn, setLoggedIn}: IGlobalState) => {
+const Index = ({user, loggedIn, setLoggedIn}: IGlobalState) => {
 
   const checkLoginHandler = () => {
     if (user.is) {

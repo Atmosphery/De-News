@@ -8,7 +8,13 @@ import Layout from '../components/layout';
 
 
 function MyApp({ Component, pageProps }: AppProps) {
+
+  
+
+
   const gun: IGunInstance = Gun(process.env.db_dev);
+
+  
   const user: IGunUserInstance = gun.user()
   user.recall({ sessionStorage: true })
   let [loggedIn, setLoggedIn] = useState(false);
