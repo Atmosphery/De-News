@@ -1,29 +1,18 @@
-import { IGun, IGunInstance, IGunUserInstance } from 'gun';
 //require('gun/sea');
-import Image from 'next/image';
 import Link from 'next/link';
 import Router from 'next/router';
-import React, { Component, Dispatch, SetStateAction } from 'react';
+import React, { Component } from 'react';
 import { CgProfile } from 'react-icons/cg'
 import { HiMenuAlt1 } from 'react-icons/hi'
-import { IGlobalState } from '../pages/objects';
-import Gun from 'gun'
-
-interface IProps {
-    user: IGunUserInstance
-    loggedIn: boolean
-    setLoggedIn: Dispatch<SetStateAction<boolean>>
-}
 
 
 
 
 
-class AppBar extends Component<IProps> {
 
+class AppBar extends Component {
 
-
-    constructor(props: any) {
+    constructor(props) {
         super(props);
 
         this.props.setLoggedIn(this.checkLogin());
@@ -34,7 +23,7 @@ class AppBar extends Component<IProps> {
 
     }
 
-    checkLogin = (): boolean => {
+    checkLogin = () => {
         //let user = gun.user();
         if (this.props.user.is) {
             console.log('You are logged in');
@@ -46,7 +35,7 @@ class AppBar extends Component<IProps> {
     }
 
 
-    componentDidMount(): void {
+    componentDidMount() {
         this.props.user.recall({ sessionStorage: true })
     }
 
