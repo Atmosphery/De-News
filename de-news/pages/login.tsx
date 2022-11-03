@@ -28,7 +28,7 @@ const Login = (props: IGlobalState) => {
         event.preventDefault();
 
         let elements = event.currentTarget.elements;
-        
+
         props.user.auth(elements.username.value, elements.password.value, (ack: any) => {
             console.log(ack);
             Router.back()

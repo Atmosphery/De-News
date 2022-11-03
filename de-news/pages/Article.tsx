@@ -7,16 +7,18 @@ import { IArticle } from './objects';
 
 const Article = (props: IArticle) => {
 
-    
-        return (
+
+    return (
+        <div>
+            <h1>{props.title}</h1>
             <div>
-                <h1>{props.title}</h1>
-                <div>{props.text}</div>
-                <div>{props.author}</div>
-                <div>{props.date}</div>
+                {props.text}
             </div>
-        )
-    
+            <div>{props.author}</div>
+            <div>{props.date}</div>
+        </div>
+    )
+
 
 }
 export default Article;

@@ -11,11 +11,13 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   
 
+  let gun: IGunInstance = Gun('localhost:8765/gun')
+  console.log('localhost:8765/gun')
 
-  const gun: IGunInstance = Gun(process.env.db_dev);
+  let user: IGunUserInstance = gun.user()
 
   
-  const user: IGunUserInstance = gun.user()
+
   user.recall({ sessionStorage: true })
   let [loggedIn, setLoggedIn] = useState(false);
 

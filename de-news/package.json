@@ -17,6 +17,7 @@
     "babel-plugin-module-resolver": "^4.1.0",
     "babel-plugin-wrap-in-js": "^1.1.1",
     "daisyui": "^2.31.0",
+    "draft-js": "^0.11.7",
     "glob": "^8.0.3",
     "gun": "^0.2020.1238",
     "heroicons": "^2.0.12",
@@ -32,6 +33,7 @@
     "sass-loader": "^13.1.0"
   },
   "devDependencies": {
+    "@types/draft-js": "^0.11.9",
     "@types/lodash": "^4.14.186",
     "@types/node": "18.8.3",
     "@types/react": "18.0.21",

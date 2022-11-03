@@ -1,14 +1,11 @@
 
-import Gun from 'gun'
-import { IGunInstance } from 'gun/types';
 
-import React, { Component, FormEvent } from 'react';
-import * as obj from './objects';
-import Article from './Article';
+import React, { FormEvent } from 'react';
 //import not from 'gun/lib/not.js';
 import _ from 'lodash';
 import AppBar from '../components/appBar';
 import { IArticle, IGlobalState } from './objects';
+import {Editor, EditorState} from 'draft-js';
 
 interface FormElements extends HTMLFormControlsCollection {
     title: HTMLInputElement;
@@ -25,7 +22,7 @@ interface MyFormElement extends HTMLFormElement {
 
 
 
-const create_article = ({ user,loggedIn,setLoggedIn }: IGlobalState) => {
+const create_article = ({gun, user,loggedIn,setLoggedIn }: IGlobalState) => {
 
     let article: IArticle = { id: '', author: '', title: '', date: '', text: '' };
 
@@ -35,15 +32,22 @@ const create_article = ({ user,loggedIn,setLoggedIn }: IGlobalState) => {
         //debugger
         var elements = event.currentTarget.elements
 
+        var pub: string;
+        if(user.is?.pub === undefined){
+            pub = 'anonymous';
+        }else{
+            pub = user.is?.pub;
+        }
+
         article = {
-            id: user.is?.pub as string,
+            id: pub,
             author: elements.author.value,
             title: elements.title.value,
             date: new Date().toString(),
             text: elements.text.value
         }
 
-        user
+        gun
             .get('articles')
             .set(article, (ack: any) => {
                 if (ack.err) {
@@ -74,7 +78,7 @@ const create_article = ({ user,loggedIn,setLoggedIn }: IGlobalState) => {
 
                     <div className='my-5'>
                         <label>Text</label><br />
-                        <input name='text' className='input input-bordered w-full max-w-sm' />
+                        <textarea name='text' className='input input-bordered w-full max-w-sm h-40' />
                     </div>
 
                     <div>
