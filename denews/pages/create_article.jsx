@@ -5,6 +5,7 @@ import React from 'react';
 import _ from 'lodash';
 import AppBar from '../components/appBar';
 
+//import Quill from 'react-quill'
 
 
 
@@ -12,7 +13,9 @@ import AppBar from '../components/appBar';
 
 
 
-const create_article = ({gun, user,loggedIn,setLoggedIn }) => {
+
+
+const create_article = ({gun, user,loggedIn,setLoggedIn, Quill }) => {
 
     let article = { id: '', author: '', title: '', date: '', text: '' };
 
@@ -47,14 +50,7 @@ const create_article = ({gun, user,loggedIn,setLoggedIn }) => {
                 console.log('Data Sucessfully inserted' +
                     `\ntitle: ${article.title}`)
             })
-
-
     }
-
-
-
-
-
 
     return (
         <main>
@@ -68,7 +64,8 @@ const create_article = ({gun, user,loggedIn,setLoggedIn }) => {
 
                     <div className='my-5'>
                         <label>Text</label><br />
-                        <textarea name='text' className='input input-bordered w-full max-w-sm h-40' />
+
+                        <div className=''><Quill /></div>
                     </div>
 
                     <div>
@@ -84,8 +81,9 @@ const create_article = ({gun, user,loggedIn,setLoggedIn }) => {
         </main>
 
     );
-
-
 }
+
+
+
 export default create_article;
 

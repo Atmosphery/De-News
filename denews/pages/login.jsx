@@ -10,15 +10,20 @@ import Link from "next/link";
 
 const Login = (props) => {
     const router = useRouter()
-    
+
     const login = (event) => {
         event.preventDefault();
 
         let elements = event.currentTarget.elements;
 
         props.user.auth(elements.username.value, elements.password.value, (ack) => {
-            console.log(ack);
-            router.back()
+            if (ack.err) {
+                console.log('wrong password')
+            } else {
+                router.back();
+            }
+            //console.log(ack);
+
         });
     }
 

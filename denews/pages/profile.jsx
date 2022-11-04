@@ -12,20 +12,38 @@ const Profile = (props) => {
 
 
     const router = useRouter();
-    let profile = { username: '', articles: [] }
+    const articles = props.profile.articles
+
+    const reactArticles = [];
+    for (let i = 0; i < articles.length; i++) {
+
+        const article = props.profile.articles[i];
+        reactArticles.push(
+
+            <Article
+                author={article.author}
+                date={article.date}
+                id={article.id}
+                text={article.text}
+                title={article.title}
+                key={i}
+            />
+
+        )
+
+
+    }
+
+
     
 
-    //console.log(props.user.is?.pub)
-    //
-    //console.log(reactArticles);
+    console.log(props.reactArticles)
 
-    
 
-    
 
 
     const checkProfile = () => {
-        console.log(profile)
+        console.log(props.profile)
         //console.log(getArticles())
     }
 
@@ -33,11 +51,15 @@ const Profile = (props) => {
     return (
         <main>
             <AppBar user={props.user} loggedIn={props.loggedIn} setLoggedIn={props.setLoggedIn} />
-            <h1>Your Profile</h1>
-            <button onClick={checkProfile} className={'btn'}>check</button>
-            <div id="articles">
-                {props.reactArticles}
+            <div className="m-5">
+                <h1>Your Profile</h1>
+                <button onClick={checkProfile} className={'btn'}>check</button>
+                <div id="articles" className="mt-5">
+                    <strong>Your Articles</strong>
+                    {reactArticles}
+                </div>
             </div>
+
         </main>
     )
 }
@@ -47,60 +69,23 @@ Profile.getInitialProps = async () => {
     let profile = { username: '', articles: [] }
     const gun = Gun('localhost:8765/gun');
     //console.log(gun);
-    
+
     const user = gun.user()
-    console.log(user)
-    user.recall({sessionStorage: true})
-    
-    gun.get('articles').map().once((article) => {
-        console.log(article);
+    user.recall({ sessionStorage: true })
+
+    await gun.get('articles').map().once((article) => {
+
         if (article.id === user.is?.pub) {
+            console.log(article);
             profile.articles.push(article);
         }
     });
 
-    const temp = [];
-        for (let i = 0; i < profile.articles.length; i++) {
-            
-            const article = profile.articles[i];
-            temp.push(
-                <Article
-                    author={article.author}
-                    date={article.date}
-                    id={article.id}
-                    text={article.text}
-                    title={article.title}
-                    key={i} />);
-        }
 
-    return {
-        reactArticles: temp
-    }
+
+    return { profile: profile }
 }
 
 export default Profile
 
 
-// export async function getServerSideProps() {
-    
-    
-// }
-
-// if (!user.is) {
-
-
-//     router.push('/login');
-// } else {
-
-//     let temp = new Array<ReactNode>
-//     user.get('articles').map().once((data) => {
-//         profile.articles.push(data);
-//     });
-
-//     for (let i = 0; i < profile.articles.length; i++) {
-//         const article = profile.articles[i];
-//         temp.push(<Article key={i} title={article.title} author={article.author} date={article.date} id={article.id} text={article.text} />)
-//     }
-
-//     setReactArticles(temp);
-// }

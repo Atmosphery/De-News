@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import Gun, { IGunInstance, IGunUserInstance } from 'gun';
 import { initializeGun } from './api/GunApi'
 import Layout from '../components/layout';
+import 'react-quill/dist/quill.snow.css'
 
 
 
