@@ -7,18 +7,22 @@ import parse from 'html-react-parser';
 const Article = (props) => {
     let parser = new DOMParser();
 
-    const handleEdit = () => {
+    const handleEdit = (id) => {
 
 
 
     }
 
-    const handleDelete = () => {
+    const handleDelete = (id) => {
         const gun = Gun();
 
-        gun.get('articles').map().once((value) => {
-            console.log(value)
-        })
+        let articlesDB;
+        gun.get('articles').once((value) => {
+            articlesDB = value;
+        });
+
+        console.log(articlesDB);
+        
     }
 
     let html = parser.parseFromString(props.text, 'text/html')
@@ -30,11 +34,11 @@ const Article = (props) => {
                 <div className='m-5'>{parse(props.text)}</div>
                 <div>by: {props.author}</div>
                 <div>{props.date}</div>
-                {props.id}
+                
 
             </div>
-            <button className='btn btn-xs btn-outline' onClick={handleEdit}>Edit</button>
-            <button className='btn btn-xs btn-outline' onClick={handleDelete}>Delete</button>
+            <button className='btn btn-xs btn-outline' onClick={handleEdit()}>Edit</button>
+            <button className='btn btn-xs btn-outline' onClick={handleDelete(props.id)}>Delete</button>
         </div>
     )
 

@@ -6,45 +6,43 @@ import AppBar from "../components/appBar";
 import Article from "../components/Article";
 import Gun from 'gun'
 import _, { set } from 'lodash'
+import ReactQuill from "react-quill";
 
 
 
 const Profile = (props) => {
 
     const router = useRouter();
-    //const articles = props.profile.articles
-
-    const [reactArticles, setReactArticles] = useState([])
-
-    console.log(props.profile)
-    let temp = []
-    props.gun.get('articles').map().on((article) => {
-            var i = 0
-            console.log(i)
-            temp.push(
-    
-                <Article
-                    author={article.author}
-                    date={article.date}
-                    id={_.get(article, "_.#", undefined)}
-                    text={article.text}
-                    title={article.title}
-                    key={i}
-                />
-            )
-            
-            i++;
-            
-    });
-    
-    if(!props.user.is){
+    if (!props.user.is) {
         router.push('/login')
     }
-    
-    setReactArticles(temp)
+
+    const profile = props.profile;
+
+    const articles = profile.articles;
+    const [reactArticles, setReactArticles] = useState([]);
+
+    for (let i = 0; i < articles.length; i++) {
+        const article = articles[i];
+
+        reactArticles.push(
+            <Article
+                author={article.author}
+                date={article.date}
+                id={_.get(article, "_.#", undefined)}
+                text={article.text}
+                title={article.title}
+                key={i}
+            />
+        );
+    }
 
 
+
     
+    console.log(profile);
+
+    //const [reactArticles, setReactArticles] = useState(tempArticles)
 
     return (
         <main>
@@ -53,7 +51,10 @@ const Profile = (props) => {
                 <h1>Your Profile</h1>
                 <div id="articles" className="mt-5">
                     <strong>Your Articles</strong>
-                    {reactArticles}
+                    <div>
+                        {reactArticles}
+                    </div>
+
                 </div>
             </div>
 
@@ -61,27 +62,29 @@ const Profile = (props) => {
     )
 }
 
-// Profile.getInitialProps = async () => {
+Profile.getInitialProps = async () => {
 
-//     let profile = { username: '', articles: [] }
-//     const gun = Gun('localhost:8765/gun');
+    let profile = { username: '', articles: [] }
+    const gun = Gun('localhost:8765/gun');
 
-//     const user = gun.user()
-//     user.recall({ sessionStorage: true })
+    const user = gun.user()
+    user.recall({ sessionStorage: true })
 
-//     // await gun.get('articles').map().once((article) => {
+    await gun.get('articles').map().once((article) => {
 
-//     //     if (article.user === user.is?.pub) {
-//     //         article.id =_.get(article, "_.#", undefined)
-//     //         console.log(article)
-//     //         profile.articles.push(article);
-//     //     }
-//     // });
+        if (article.user === user.is.pub) {
+            article.id = _.get(article, "_.#", undefined)
+            //console.log(article)
+            profile.articles.push(article);
+        }
+    });
 
-
-
-//     return { profile: profile }
-// }
+    
+    //console.log(profile);
+    return {
+        profile: profile
+    }
+}
 
 export default Profile
 
