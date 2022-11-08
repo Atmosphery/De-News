@@ -20,6 +20,7 @@ const Login = (props) => {
             if (ack.err) {
                 console.log('wrong password')
             } else {
+                props.setLoggedIn(true);
                 router.back();
             }
             //console.log(ack);

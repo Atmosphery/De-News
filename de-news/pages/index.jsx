@@ -13,17 +13,13 @@ import AppBar from '../components/appBar';
 
 //const gun: IGunInstance = Gun('localhost:8765')
 //{gun, user, setUser}: IProps
-const Index = ({user, loggedIn, setLoggedIn}) => {
+const Index = ({gun, user, loggedIn, setLoggedIn}) => {
 
   const checkLoginHandler = () => {
-    if (user.is) {
-      console.log("You are logged in")
-
-    } else {
-      console.log("You are not logged in")
-    }
-    console.log(user)
-
+    gun.get('articles').put(null);
+    gun.get('articles').once((data) => {
+      console.log(data)
+    })
   }
 
 

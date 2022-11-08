@@ -11,8 +11,7 @@ function MyApp({ Component, pageProps }) {
 
   
 
-  let gun = Gun('localhost:8765/gun')
-  console.log('localhost:8765/gun')
+  let gun = Gun('localhost:3000/gun')
 
   let user = gun.user()
 

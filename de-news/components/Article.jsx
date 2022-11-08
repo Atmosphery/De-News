@@ -1,7 +1,9 @@
 
 import React from 'react';
 import parse from 'html-react-parser';
-
+import _ from 'lodash'
+require('gun/lib/unset.js')
+require('gun/lib/path.js')
 
 
 const Article = (props) => {
@@ -13,19 +15,52 @@ const Article = (props) => {
 
     }
 
-    const handleDelete = (id) => {
-        const gun = Gun();
+    const handleDelete = async (event) => {
+        const gun = Gun('localhost:3000/gun')
 
-        let articlesDB;
-        gun.get('articles').once((value) => {
-            articlesDB = value;
+        let toDelete;
+
+        const gunArticles = gun.get('articles');
+
+
+
+        await gunArticles.map(article => article !== null ? article : undefined).once((data, id) => {
+
+
+            //console.log(articlesDB);
+            if (id === props.id) {
+                console.log(data);
+                toDelete = data;
+                //gunArticles.path(id).put(null);
+                gunArticles.unset(_.get(data, '_'))
+                //console.log('is deleted');
+            }
         });
 
-        console.log(articlesDB);
-        
+
+
+        console.log(toDelete)
+
+
+        await gunArticles.on((data) => {
+            console.log(data);
+        })
+
+
+
+
+
+        // for (let i = 0; i < articlesDB.length; i++) {
+        //     const article = articlesDB[i];
+        //     console.log(article);
+        //     if(article === props.id){
+
+        //     }
+        // }
+
+
     }
 
-    let html = parser.parseFromString(props.text, 'text/html')
     //console.log(props.text)
     return (
         <div className='m-5'>
@@ -34,11 +69,11 @@ const Article = (props) => {
                 <div className='m-5'>{parse(props.text)}</div>
                 <div>by: {props.author}</div>
                 <div>{props.date}</div>
-                
+
 
             </div>
             <button className='btn btn-xs btn-outline' onClick={handleEdit()}>Edit</button>
-            <button className='btn btn-xs btn-outline' onClick={handleDelete(props.id)}>Delete</button>
+            <button className='btn btn-xs btn-outline' onClick={handleDelete}>Delete</button>
         </div>
     )
 
