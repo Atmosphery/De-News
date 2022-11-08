@@ -117,10 +117,7 @@ Profile.getInitialProps = async () => {
     })
 
 
-
     //article => article.user === pub && article !== null ? article : undefined
-
-
 
     await gunArticles.map().on((article, id) => {
 
@@ -128,15 +125,12 @@ Profile.getInitialProps = async () => {
         console.log(article, id);
 
 
-        if (article !== null && id !== '#' && id !== '>') {
+        if (article !== null && id !== '#' && id !== '>' && article.user === pub) {
 
             article.id = id;
             //console.log(article)
             profile.articles.push(article);
         }
-
-
-
 
     });
 
