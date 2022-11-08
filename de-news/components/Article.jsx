@@ -7,7 +7,8 @@ require('gun/lib/path.js')
 
 
 const Article = (props) => {
-    let parser = new DOMParser();
+
+    const gun = props.gun;
 
     const handleEdit = (id) => {
 
@@ -15,49 +16,47 @@ const Article = (props) => {
 
     }
 
-    const handleDelete = async (event) => {
-        const gun = Gun('localhost:3000/gun')
+    // gun.get('articles').on((data) => {
+    //     console.log(data);
+    // })
 
-        let toDelete;
+    const handleDelete = async (event) => {
+
+
+        let listData;
 
         const gunArticles = gun.get('articles');
 
 
 
-        await gunArticles.map(article => article !== null ? article : undefined).once((data, id) => {
+        await gunArticles.once((data) => {
 
-
-            //console.log(articlesDB);
-            if (id === props.id) {
-                console.log(data);
-                toDelete = data;
-                //gunArticles.path(id).put(null);
-                gunArticles.unset(_.get(data, '_'))
-                //console.log('is deleted');
-            }
+            //console.log(data);
+            listData = data;
+            //gunArticles.path(id).put(null);
+            //console.log('is deleted');
         });
 
 
+        delete listData[props.id];
+        console.log(listData);
+        await gunArticles.put(listData);
 
-        console.log(toDelete)
-
-
-        await gunArticles.on((data) => {
-            console.log(data);
-        })
-
-
-
-
-
-        // for (let i = 0; i < articlesDB.length; i++) {
-        //     const article = articlesDB[i];
-        //     console.log(article);
-        //     if(article === props.id){
-
-        //     }
-        // }
-
+        let arrRef = props.reactArticles
+        let newArr = []
+        for (let i = 0; i < arrRef.length; i++) {
+            const reactComp = arrRef[i];
+//left of HEREEEEEEEEEEEEE
+            console.log(reactComp.props.id);
+            console.log(reactComp.props.id !== props.id);
+            if (reactComp.props.id !== props.id) {
+                
+                newArr.push(reactComp);
+            }
+        }
+        console.log(newArr);
+        //props.setReactArticles(newArr);
+        //gunArticles.unset(toDelete)
 
     }
 
@@ -69,7 +68,7 @@ const Article = (props) => {
                 <div className='m-5'>{parse(props.text)}</div>
                 <div>by: {props.author}</div>
                 <div>{props.date}</div>
-
+                {props.id}
 
             </div>
             <button className='btn btn-xs btn-outline' onClick={handleEdit()}>Edit</button>

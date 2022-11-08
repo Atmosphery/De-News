@@ -64,12 +64,15 @@ const Profile = (props) => {
             //console.log(article.text)
             tempArticles.push(
                 <Article
+                    setReactArticles = {setReactArticles}
+                    reactArticles = {reactArticles}
                     author={article.author}
                     date={article.date}
                     user={props.user.is.pub}
                     id={_.get(article, "_.#", undefined)}
                     text={article.text}
                     title={article.title}
+                    gun={props.gun}
                     key={i}
                 />
             );
@@ -112,25 +115,23 @@ Profile.getInitialProps = async () => {
 
     const gunArticles = gun.get('articles');
 
-    await gunArticles.on((data) => {
-        console.log(data)
-    })
-
 
     //article => article.user === pub && article !== null ? article : undefined
 
-    await gunArticles.map().on((article, id) => {
+    await gunArticles.map(article => article.user === pub ? article : undefined).once((article, id) => {
 
 
         console.log(article, id);
 
+        article.id = id;
+        //console.log(article)
+        profile.articles.push(article);
+        // if (article !== null && id !== '#' && id !== '>' && article.user === pub) {
 
-        if (article !== null && id !== '#' && id !== '>' && article.user === pub) {
-
-            article.id = id;
-            //console.log(article)
-            profile.articles.push(article);
-        }
+        //     article.id = id;
+        //     //console.log(article)
+        //     profile.articles.push(article);
+        // }
 
     });
 
