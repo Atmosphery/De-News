@@ -44,7 +44,6 @@ const Create_article = ({ gun, user, loggedIn, setLoggedIn }) => {
 
 
         gun
-            
             .get('articles')
             .set(article, (ack) => {
                 if (ack.err) {

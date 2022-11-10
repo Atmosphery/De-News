@@ -2,17 +2,18 @@
 import React from 'react';
 import parse from 'html-react-parser';
 import _ from 'lodash'
+import { useEffect } from 'react';
 require('gun/lib/unset.js')
 require('gun/lib/path.js')
 
 
 const Article = (props) => {
 
-    const gun = props.gun;
+    const gunArticles = props.gun;
 
     const handleEdit = (id) => {
 
-
+      
 
     }
 
@@ -23,40 +24,28 @@ const Article = (props) => {
     const handleDelete = async (event) => {
 
 
-        let listData;
-
-        const gunArticles = gun.get('articles');
-
-
-
-        await gunArticles.once((data) => {
-
-            //console.log(data);
-            listData = data;
+        let _id = ''
+        await gunArticles.map().once((data, id) => {
+            if (id === props.id) {
+                gunArticles.get(id).put(null);
+                console.log('is deleted');
+            }
             //gunArticles.path(id).put(null);
-            //console.log('is deleted');
+
         });
 
 
-        delete listData[props.id];
-        console.log(listData);
-        await gunArticles.put(listData);
+        //debugger
+        let arrRef = props.articles
+        console.log(arrRef.length)
+        
 
-        let arrRef = props.reactArticles
-        let newArr = []
-        for (let i = 0; i < arrRef.length; i++) {
-            const reactComp = arrRef[i];
-//left of HEREEEEEEEEEEEEE
-            console.log(reactComp.props.id);
-            console.log(reactComp.props.id !== props.id);
-            if (reactComp.props.id !== props.id) {
-                
-                newArr.push(reactComp);
-            }
-        }
+        let newArr = arrRef.filter(article => article.id !== props.id);
+        
+        
         console.log(newArr);
-        //props.setReactArticles(newArr);
-        //gunArticles.unset(toDelete)
+        console.log(props.articles);
+        props.setArticles(newArr);
 
     }
 

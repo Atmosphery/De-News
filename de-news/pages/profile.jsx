@@ -44,17 +44,21 @@ const Profile = (props) => {
 
     const router = useRouter();
 
+    props.gun.get('articles').on((data) => {
+        console.log(data)
+    })
 
-    const articles = props.profile.articles;
+    const [articles, setArticles] = useState(props.profile.articles);
     console.log(articles);
 
     const [reactArticles, setReactArticles] = useState([]);
 
     useEffect(() => {
+        const rArticles = profileInit();
+        setReactArticles(rArticles);
+    }, [articles])
 
-        const articles = profileInit();
-        setReactArticles(articles);
-    }, [])
+
 
 
     const profileInit = () => {
@@ -64,21 +68,23 @@ const Profile = (props) => {
             //console.log(article.text)
             tempArticles.push(
                 <Article
-                    setReactArticles = {setReactArticles}
-                    reactArticles = {reactArticles}
+                    setArticles={setArticles}
+                    articles={articles}
                     author={article.author}
                     date={article.date}
                     user={props.user.is.pub}
                     id={_.get(article, "_.#", undefined)}
                     text={article.text}
                     title={article.title}
-                    gun={props.gun}
+                    gun={props.gun.get('articles')}
                     key={i}
                 />
             );
         }
         return tempArticles;
     }
+
+
 
     console.log(reactArticles);
 
@@ -106,38 +112,29 @@ const Profile = (props) => {
 Profile.getInitialProps = async () => {
 
     let profile = { username: '', articles: [] }
-    const gun = Gun('localhost:3000/gun');
+    const gun = Gun('localhost:8765/gun');
 
     const user = gun.user()
     user.recall({ sessionStorage: true })
 
     const pub = user.is?.pub;
 
-    const gunArticles = gun.get('articles');
+    const gunArticles = gun.get('deNewsDb/articles');
 
 
     //article => article.user === pub && article !== null ? article : undefined
 
-    await gunArticles.map(article => article.user === pub ? article : undefined).once((article, id) => {
+    await gunArticles.map().on((article, id) => {
 
 
-        console.log(article, id);
+        if (article !== null && article.user === pub) {
 
-        article.id = id;
-        //console.log(article)
-        profile.articles.push(article);
-        // if (article !== null && id !== '#' && id !== '>' && article.user === pub) {
-
-        //     article.id = id;
-        //     //console.log(article)
-        //     profile.articles.push(article);
-        // }
+            article.id = id;
+            console.log(article, id);
+            profile.articles.push(article);
+        }
 
     });
-
-
-
-
 
 
     return { profile: profile }

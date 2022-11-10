@@ -11,11 +11,11 @@ function MyApp({ Component, pageProps }) {
 
   
 
-  let gun = Gun('localhost:3000/gun')
+  let gun = Gun('localhost:8765/gun')
 
   let user = gun.user()
 
-  
+  gun = gun.get('deNewsDb');
 
   user.recall({ sessionStorage: true })
   let [loggedIn, setLoggedIn] = useState(false);
