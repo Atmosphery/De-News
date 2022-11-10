@@ -5,42 +5,12 @@ import { useState } from "react";
 import AppBar from "../components/appBar";
 import Article from "../components/Article";
 import Gun from 'gun'
-import _, { set } from 'lodash'
+import _ from 'lodash'
 import { useEffect } from "react";
 require('gun/lib/unset.js')
 require('gun/lib/path.js')
-import Login from './login'
-
-
-// export async function getServerSideProps(context) {
-
-//     let profile = { username: '', articles: [] }
-//     const gun = Gun('localhost:8765/gun');
-
-//     const user = gun.user()
-//     user.recall({ sessionStorage: true })
-
-//     await gun.get('articles').map().once((article) => {
-
-//         if (article.user === user.is.pub) {
-//             article.id = _.get(article, "_.#", undefined)
-
-//             console.log(article);
-//             profile.articles.push(article);
-//         }
-//     });
-
-//     return {
-//         props: {
-//             profile: profile
-//         }, // will be passed to the page component as props
-//     }
-// }
-
 
 const Profile = (props) => {
-
-
 
     const router = useRouter();
 
@@ -109,6 +79,37 @@ const Profile = (props) => {
     )
 }
 
+// export async function getServerSideProps() {
+//     let profile = { username: '', articles: [] }
+//     const gun = Gun('localhost:8765/gun');
+
+//     const user = gun.user()
+//     user.recall({ sessionStorage: true })
+
+//     const pub = user.is?.pub;
+
+//     const gunArticles = gun.get('deNewsDb/articles');
+
+
+//     //article => article.user === pub && article !== null ? article : undefined
+
+//     await gunArticles.map().on((article, id) => {
+
+
+//         if (article !== null && article.user === pub) {
+
+//             article.id = id;
+//             console.log(article, id);
+//             profile.articles.push(article);
+//         }
+//     });
+
+
+//     return {
+//         profile: profile
+//     }
+// }
+
 Profile.getInitialProps = async () => {
 
     let profile = { username: '', articles: [] }
@@ -133,7 +134,6 @@ Profile.getInitialProps = async () => {
             console.log(article, id);
             profile.articles.push(article);
         }
-
     });
 
 
