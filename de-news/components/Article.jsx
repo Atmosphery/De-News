@@ -11,45 +11,33 @@ const Article = (props) => {
 
     const gunArticles = props.gun;
 
-    const handleEdit = (id) => {
+    const handleEdit = () => {
 
-      
+        
 
     }
 
-    // gun.get('articles').on((data) => {
-    //     console.log(data);
-    // })
 
     const handleDelete = async (event) => {
 
-
-        let _id = ''
         await gunArticles.map().once((data, id) => {
             if (id === props.id) {
                 gunArticles.get(id).put(null);
-                console.log('is deleted');
+                console.log(`${data} is deleted`);
             }
-            //gunArticles.path(id).put(null);
 
         });
 
-
-        //debugger
         let arrRef = props.articles
         console.log(arrRef.length)
-        
 
         let newArr = arrRef.filter(article => article.id !== props.id);
-        
-        
+
         console.log(newArr);
         console.log(props.articles);
         props.setArticles(newArr);
-
     }
 
-    //console.log(props.text)
     return (
         <div className='m-5'>
             <div className={'p-5 border-2 border-solid border-black w-full max-w-lg'}>
@@ -60,11 +48,10 @@ const Article = (props) => {
                 {props.id}
 
             </div>
-            <button className='btn btn-xs btn-outline' onClick={handleEdit()}>Edit</button>
+            <button className='btn btn-xs btn-outline' onClick={handleEdit}>Edit</button>
             <button className='btn btn-xs btn-outline' onClick={handleDelete}>Delete</button>
         </div>
     )
-
 
 }
 export default Article;
