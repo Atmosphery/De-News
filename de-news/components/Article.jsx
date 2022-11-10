@@ -5,7 +5,7 @@ import _ from 'lodash'
 import { useEffect } from 'react';
 require('gun/lib/unset.js')
 require('gun/lib/path.js')
-
+import style from '../styles/article.module.css'
 
 const Article = (props) => {
 
@@ -39,7 +39,7 @@ const Article = (props) => {
     }
 
     return (
-        <div className='m-5'>
+        <div className={style.article}>
             <div className={'p-5 border-2 border-solid border-black w-full max-w-lg'}>
                 <h1>{props.title}</h1>
                 <div className='m-5'>{parse(props.text)}</div>

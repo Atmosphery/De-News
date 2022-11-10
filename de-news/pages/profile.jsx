@@ -10,9 +10,14 @@ import { useEffect } from "react";
 require('gun/lib/unset.js')
 require('gun/lib/path.js')
 
+
 const Profile = (props) => {
 
     const router = useRouter();
+
+    if(!props.user.is){
+        router.push('/login');
+    }
 
     props.gun.get('articles').on((data) => {
         console.log(data)
