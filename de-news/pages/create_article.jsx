@@ -7,7 +7,6 @@ import AppBar from '../components/appBar';
 import dynamic from "next/dynamic";
 import { useState } from 'react';
 const Quill = dynamic(() => import('react-quill'), { ssr: false });
-//import Quill from 'react-quill'
 
 
 const Create_article = ({ gun, user, loggedIn, setLoggedIn }) => {
@@ -20,8 +19,6 @@ const Create_article = ({ gun, user, loggedIn, setLoggedIn }) => {
     const saveArticle = (event) => {
 
         event.preventDefault();
-
-
 
         //debugger
         var elements = event.currentTarget.elements
@@ -56,6 +53,7 @@ const Create_article = ({ gun, user, loggedIn, setLoggedIn }) => {
     }
 
     const handleEditorChnage = (html) => {
+        
         setEditorHtml(html);
         console.log(html)
     }

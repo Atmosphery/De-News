@@ -85,9 +85,9 @@ class AppBar extends Component {
                             <CgProfile size={35} />
                         </label>
                         <ul tabIndex={0} className='menu dropdown-content rounded-box w-48 mt-3 bg-gray-900'>
-                            <li><button onClick={this.handleLoginbtnClick}>{(this.props.loggedIn) ? 'Sign out' : 'Login'}</button></li>
                             <li><Link href={'/profile'}>Profile</Link></li>
                             <li><Link href={'/login'}>Your Articles</Link></li>
+                            <li><button onClick={this.handleLoginbtnClick}>{(this.props.loggedIn) ? 'Sign out' : 'Login'}</button></li>
                         </ul>
 
                     </div>

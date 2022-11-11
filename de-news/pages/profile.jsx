@@ -15,16 +15,14 @@ const Profile = (props) => {
 
     const router = useRouter();
 
-    if(!props.user.is){
+
+    if (!props.user.is) {
         router.push('/login');
     }
 
-    props.gun.get('articles').on((data) => {
-        console.log(data)
-    })
 
     const [articles, setArticles] = useState(props.profile.articles);
-    console.log(articles);
+
 
     const [reactArticles, setReactArticles] = useState([]);
 
@@ -61,9 +59,6 @@ const Profile = (props) => {
 
 
 
-    console.log(reactArticles);
-
-
 
     return (
         <main>
@@ -73,9 +68,6 @@ const Profile = (props) => {
                 <div id="articles" className="mt-5">
                     <strong>Your Articles</strong>
                     {reactArticles}
-                    <div>
-
-                    </div>
 
                 </div>
             </div>
@@ -128,8 +120,6 @@ Profile.getInitialProps = async () => {
     const gunArticles = gun.get('deNewsDb/articles');
 
 
-    //article => article.user === pub && article !== null ? article : undefined
-
     await gunArticles.map().on((article, id) => {
 
 
@@ -144,9 +134,6 @@ Profile.getInitialProps = async () => {
 
     return { profile: profile }
 }
-
-
-
 
 export default Profile
 
