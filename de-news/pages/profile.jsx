@@ -17,7 +17,7 @@ const Profile = (props) => {
 
 
     if (!props.user.is) {
-        
+
         router.push('/login');
     }
 
@@ -36,7 +36,7 @@ const Profile = (props) => {
     }, [articles])
 
 
-    
+
 
     const profileInit = () => {
         const tempArticles = [];
@@ -93,16 +93,19 @@ Profile.getInitialProps = async () => {
 
     const gunArticles = gun.get('deNewsDb/articles');
 
-
-    await gunArticles.map(article => article !== null ? article: undefined).once((article, id) => {
+    var itemFound = false;
+    await gunArticles.map(article => article !== null ? article : undefined).once((article, id) => {
         console.log(article)
         if (article.user === pub) {
-            
+            itemFound = true
             article.id = id;
             console.log(article, id);
             profile.articles.push(article);
         }
     });
+
+    
+
 
 
     return { profile: profile }

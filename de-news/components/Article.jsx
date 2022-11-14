@@ -91,12 +91,14 @@ const Article = (props) => {
             //element.innerHTML = editorHtml;
             setTextEditState(parse(editorHtml));
             setClicked(false);
+            setSubmit(false);
         }
 
     }, [editorHtml, itemClicked, submit])
 
     const handleTextEditBtn = (target) => {
         setSubmit(true);
+        console.log(submit);
         setClicked(false);
     }
 
@@ -111,12 +113,9 @@ const Article = (props) => {
         element = $(element);
         const target = element.get(0).currentTarget;
         //console.log(itemClicked);
-        if (!setClicked((state) => {
-            console.log(state)
-            return state
-        })) {
+        if (!itemClicked) {
 
-            console.log(target);
+            console.log(itemClicked);
             setClicked(true);
             console.log(itemClicked);
 
