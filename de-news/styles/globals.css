@@ -1,3 +1,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+ol {
+    list-style: decimal;
+}
+
+li{
+    list-style: circle;
+}
+
+ol li {
+    
+    list-style-position: inside;
+    margin: 5px;
+    padding-left: 10px
+
+}

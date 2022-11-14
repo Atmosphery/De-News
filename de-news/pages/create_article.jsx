@@ -13,8 +13,8 @@ const Create_article = ({ gun, user, loggedIn, setLoggedIn }) => {
 
     let article = { id: '', author: '', title: '', date: '', text: '' };
 
-    let [editorHtml, setEditorHtml] = useState('');
-
+    const [editorHtml, setEditorHtml] = useState('');
+    const [articleAdded, setArticleAdded] = useState(<div></div>);
 
     const saveArticle = (event) => {
 
@@ -33,9 +33,9 @@ const Create_article = ({ gun, user, loggedIn, setLoggedIn }) => {
         article = {
             id: '',
             user: pub,
-            author: elements.author.value,
+            author: sessionStorage.getItem('currentUser'),
             title: elements.title.value,
-            date: new Date().toString(),
+            date: new Date().toUTCString(),
             text: editorHtml
         }
 
@@ -45,16 +45,21 @@ const Create_article = ({ gun, user, loggedIn, setLoggedIn }) => {
             .set(article, (ack) => {
                 if (ack.err) {
                     console.log('An error happened while inserting')
+                    setArticleAdded(<h2 className='text-green-700'>An error occured, Article was not inserted</h2>);
                     console.log(ack.err);
+                } else {
+                    console.log('Data Sucessfully inserted')
+                    setArticleAdded(<h2 className='text-green-700'>Article '{article.title}' was added</h2>);
+
                 }
-                console.log('Data Sucessfully inserted' +
-                    `\ntitle: ${ack.err}}`)
-            })
+
+            });
     }
 
     const handleEditorChnage = (html) => {
-        
+
         setEditorHtml(html);
+        console.log(editorHtml);
         console.log(html)
     }
 
@@ -63,37 +68,31 @@ const Create_article = ({ gun, user, loggedIn, setLoggedIn }) => {
             <AppBar user={user} loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
             <div className='m-10 '>
                 <form onSubmit={saveArticle} className='flex'>
-                    <div className='flex-col'>
+                    <div className='flex-col w-screen max-w-6xl'>
                         <div>
                             <label>Title</label><br />
                             <input name='title' className='input input-bordered w-full max-w-sm' />
                         </div>
 
-                        <div className='my-5'>
-                            <label>Author</label><br />
-                            <input name='author' className='input input-bordered w-full max-w-sm' />
+                        <div className='mt-5'>
+                            <label>Text</label><br />
+                            <div className='mt-2'>
+                                <Quill
+                                    name='text'
+                                    className='bg-white text-black w-full'
+                                    theme='snow'
+                                    value={editorHtml}
+                                    onChange={handleEditorChnage}
+                                />
+                            </div>
                         </div>
 
-                        <div>
+
+                        {articleAdded}
+                        <div className='mt-5'>
                             <button className='btn'>Add</button>
                         </div>
                     </div>
-
-                    <div className='ml-20 flex-1'>
-                        <label>Text</label><br />
-                        <div className=''>
-                            <Quill
-                                name='text'
-                                className='bg-white text-black w-full'
-                                theme='snow'
-                                value={editorHtml}
-                                onChange={handleEditorChnage}
-                            />
-                        </div>
-                    </div>
-
-
-
 
                 </form>
             </div>

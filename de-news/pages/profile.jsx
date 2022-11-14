@@ -17,22 +17,26 @@ const Profile = (props) => {
 
 
     if (!props.user.is) {
+        
         router.push('/login');
     }
 
 
     const [articles, setArticles] = useState(props.profile.articles);
 
+    console.log(props.user);
 
     const [reactArticles, setReactArticles] = useState([]);
 
     useEffect(() => {
         const rArticles = profileInit();
         setReactArticles(rArticles);
+        const username = sessionStorage.getItem('currentUsername');
+        props.profile.username = username;
     }, [articles])
 
 
-
+    
 
     const profileInit = () => {
         const tempArticles = [];
@@ -63,12 +67,11 @@ const Profile = (props) => {
     return (
         <main>
             <AppBar user={props.user} loggedIn={props.loggedIn} setLoggedIn={props.setLoggedIn} />
-            <div className="m-5">
-                <h1>Your Profile</h1>
-                <div id="articles" className="mt-5">
+            <div className="flex flex-col items-center">
+                <h1 className="text-5xl">{props.profile.username}'s Profile</h1>
+                <div id="articles" className="mt-5 flex flex-col items-center">
                     <strong>Your Articles</strong>
                     {reactArticles}
-
                 </div>
             </div>
 
@@ -76,36 +79,7 @@ const Profile = (props) => {
     )
 }
 
-// export async function getServerSideProps() {
-//     let profile = { username: '', articles: [] }
-//     const gun = Gun('localhost:8765/gun');
 
-//     const user = gun.user()
-//     user.recall({ sessionStorage: true })
-
-//     const pub = user.is?.pub;
-
-//     const gunArticles = gun.get('deNewsDb/articles');
-
-
-//     //article => article.user === pub && article !== null ? article : undefined
-
-//     await gunArticles.map().on((article, id) => {
-
-
-//         if (article !== null && article.user === pub) {
-
-//             article.id = id;
-//             console.log(article, id);
-//             profile.articles.push(article);
-//         }
-//     });
-
-
-//     return {
-//         profile: profile
-//     }
-// }
 
 Profile.getInitialProps = async () => {
 
@@ -120,11 +94,10 @@ Profile.getInitialProps = async () => {
     const gunArticles = gun.get('deNewsDb/articles');
 
 
-    await gunArticles.map().on((article, id) => {
-
-
-        if (article !== null && article.user === pub) {
-
+    await gunArticles.map(article => article !== null ? article: undefined).once((article, id) => {
+        console.log(article)
+        if (article.user === pub) {
+            
             article.id = id;
             console.log(article, id);
             profile.articles.push(article);

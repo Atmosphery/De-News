@@ -1,26 +1,35 @@
 
 import React from 'react';
 import parse from 'html-react-parser';
-import _ from 'lodash'
+import _, { set } from 'lodash'
 require('gun/lib/unset.js')
 require('gun/lib/path.js')
 import $ from 'jquery'
+import { useState } from 'react';
+import dynamic from "next/dynamic";
+import { useEffect } from 'react';
+const Quill = dynamic(() => import('react-quill'), { ssr: false });
+
 
 
 
 const Article = (props) => {
 
     const gunArticles = props.gun;
-
+    const [itemClicked, setClicked] = useState(false);
+    const [textEditState, setTextEditState] = useState(parse(props.text));
+    const [editorHtml, setEditorHtml] = useState(props.text);
+    const [submit, setSubmit] = useState(false);
 
 
     const handleEdit = async (newData, elementId) => {
 
         await gunArticles.map().once((data, id) => {
             if (id === props.id) {
-                gunArticles.get(id).put({ [elementId]: newData })
+                gunArticles.get(id).put({ [elementId]: newData });
             }
         });
+
     }
 
 
@@ -39,46 +48,108 @@ const Article = (props) => {
     }
 
     const clickItem = (element) => {
-        element = $(element)
-        let target = element.get(0).target;
-        let elementId = target.id;
-        let elementName = target.localName;
+        if (!itemClicked) {
+            setClicked(true);
+            element = $(element)
+            let target = element.get(0).target;
+            let elementId = target.id + 'Inner';
+            let elementName = target.localName;
 
-        if (elementName !== 'input') {
+            if (elementName !== 'input') {
 
-            let elementHTML = target.innerHTML;
-            //debugger
+                let elementHTML = target.innerHTML;
+                //debugger
 
-            //Chnage html to an input
-            target.innerHTML = `<input id='${elementId}' value='${elementHTML}'/>`;
-            //Listener for confirming edit with enter
-            console.log(elementId);
-            document.getElementById(elementId).addEventListener('keyup', (event) => {
+                //Chnage html to an input
+                target.innerHTML = `<input id='${elementId}' value='${elementHTML}'/>`;
+                //Listener for confirming edit with enter
+                console.log(elementId);
+                document.getElementById(elementId).addEventListener('keyup', (event) => {
 
-                if (event.key === 'Enter') {
-                    //jQuery for input element, then get value
-                    let inputValue = $('input').val();
+                    if (event.key === 'Enter') {
+                        //jQuery for input element, then get value
+                        let inputValue = $('input').val();
+                        handleEdit(inputValue, target.id);
+                        setClicked(false);
+                        target.innerHTML = inputValue;
+                    }
+                });
+            }
+        }
+    }
 
-                    handleEdit(inputValue, elementId);
 
-                    target.innerHTML = inputValue;
-                }
-            });
+    useEffect(() => {
+        console.log(itemClicked, 'itemClicked');
+        console.log(editorHtml);
+        console.log(submit, "submit")
+        if (submit) {
+            let element = $('#text').get(0);
+            console.log(element);
+
+            handleEdit(editorHtml, element.id);
+            //element.innerHTML = editorHtml;
+            setTextEditState(parse(editorHtml));
+            setClicked(false);
         }
 
+    }, [editorHtml, itemClicked, submit])
 
+    const handleTextEditBtn = (target) => {
+        setSubmit(true);
+        setClicked(false);
+    }
+
+    const handleEditorChnage = (html) => {
+
+        setEditorHtml(html);
+        console.log(editorHtml);
+    }
+
+
+    const handleTextClick = (element) => {
+        element = $(element);
+        const target = element.get(0).currentTarget;
+        //console.log(itemClicked);
+        if (!setClicked((state) => {
+            console.log(state)
+            return state
+        })) {
+
+            console.log(target);
+            setClicked(true);
+            console.log(itemClicked);
+
+            setTextEditState(<>
+                <Quill
+                    name='text'
+                    className='bg-white text-black w-full'
+                    theme='snow'
+                    value={editorHtml}
+                    onChange={handleEditorChnage}
+                />
+                <button id='btnSubmitEdit' className='btn btn-xs btn-outline mt-1' onClick={() => {
+                    handleTextEditBtn(target);
+
+                }}>Submit Edit</button>
+            </>
+            )
+
+
+        }
     }
 
 
     return (
-        <div>
-            <div className={'p-5 border-2 border-solid border-black w-full max-w-lg'}>
+        <div className='mt-5'>
+            <div className={'p-3 border-2 border-solid border-black w-screen max-w-4xl'}>
                 <h1 id='title' onClick={clickItem} className='text-3xl font-bold underline'>{props.title}</h1>
-                <div id='text' onClick={clickItem} className='m-5'>{parse(props.text)}</div>
-                <div id='author' onClick={clickItem}>by: {props.author}</div>
-                <div id='date' onClick={clickItem}>{props.date}</div>
+                <div id='text' onClick={handleTextClick} className='m-5'>{textEditState}</div>
+                <div className='flex'><p className='mr-2'>By:</p><h2 id='author' onClick={clickItem}>{props.author}</h2></div>
+                <div className='flex'><p className='mr-2'>Posted:</p><h2 id='date' onClick={clickItem}>{props.date}</h2></div>
+                <p>{itemClicked.toString()}</p>
             </div>
-            <button className='btn btn-xs btn-outline' onClick={handleDelete}>Delete</button>
+            <button className='btn btn-sm btn-outline mt-1' onClick={handleDelete}>Delete</button>
         </div>
     )
 

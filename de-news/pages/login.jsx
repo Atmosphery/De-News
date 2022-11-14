@@ -2,6 +2,7 @@ import 'gun/sea';
 import AppBar from "../components/appBar";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import { useState } from 'react';
 
 
 
@@ -11,22 +12,30 @@ import Link from "next/link";
 const Login = (props) => {
     const router = useRouter()
 
-    const login = (event) => {
+    const [wrongPasswordReact, setWrongPasswordReact] = useState(<div></div>);
+
+    
+
+    const login = async(event) => {
         event.preventDefault();
 
         let elements = event.currentTarget.elements;
 
-        props.user.auth(elements.username.value, elements.password.value, (ack) => {
+        await props.user.auth(elements.username.value, elements.password.value, (ack) => {
             if (ack.err) {
+                setWrongPasswordReact(<h2 className='text-red-700'>Incorrect Password or Username!</h2>)
                 console.log('wrong password')
             } else {
                 props.setLoggedIn(true);
+                sessionStorage.setItem('currentUsername', elements.username.value);
                 router.back();
             }
             //console.log(ack);
 
         });
     }
+
+
 
     return (
         <main>
@@ -42,6 +51,7 @@ const Login = (props) => {
                         <label>Password</label><br />
                         <input type='password' name="password" className='input input-bordered max-w-xs' />
                     </div>
+                    {wrongPasswordReact}
                     <div>
                         <button className='btn mt-4'>Login</button>
                     </div>
