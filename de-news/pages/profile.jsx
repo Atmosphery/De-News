@@ -1,4 +1,5 @@
 import { _GunRoot } from "gun"
+
 import 'gun/sea';
 import { useRouter } from "next/router"
 import { useState } from "react";
@@ -9,6 +10,7 @@ import _ from 'lodash'
 import { useEffect } from "react";
 require('gun/lib/unset.js')
 require('gun/lib/path.js')
+require('../synchronous.js');
 
 
 const Profile = (props) => {
