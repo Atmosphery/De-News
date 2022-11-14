@@ -8,6 +8,7 @@ import Article from "../components/Article";
 import Gun from 'gun'
 import _ from 'lodash'
 import { useEffect } from "react";
+import React from "react";
 require('gun/lib/unset.js')
 require('gun/lib/path.js')
 require('../synchronous.js');
@@ -23,24 +24,72 @@ const Profile = (props) => {
         router.push('/login');
     }
 
-
-    const [articles, setArticles] = useState(props.profile.articles);
-
-    console.log(props.user);
-
+    let profile = { username: '', articles: [] };
+    const username = useState(sessionStorage.getItem('currentUsername'));
+    const [articles, setArticles] = useState(profile.articles);
     const [reactArticles, setReactArticles] = useState([]);
+    //
+
+    const checkExising = (existingArticles, id) => {
+
+        //debugger
+        for (let i = 0; i < existingArticles.length; i++) {
+            const article = existingArticles[i];
+            if(article === id){
+                return true;
+            }
+        }
+        return false;
+    }
 
     useEffect(() => {
-        const rArticles = profileInit();
-        setReactArticles(rArticles);
-        const username = sessionStorage.getItem('currentUsername');
-        props.profile.username = username;
+        (async function () {
+            const existingArticles = []
+            await props.gun.get('articles').map(article => article !== null? article:undefined).on((article, id) => {
+                const doesExist = checkExising(existingArticles, id);
+                console.log(doesExist);
+
+                if (article.user === pub && !doesExist) {
+                    existingArticles.push(id);
+                    article.id = id;
+                    console.log(article, id);
+                    profile.articles.push(article);
+                    //setArticles(tempArr);
+                }
+            });
+
+            
+            console.log(articles.length, 'article state');
+            const rArticles = profileInit();
+            console.log(rArticles.length, 'rArticles')
+            setReactArticles(rArticles);
+
+        })
+        ();
+        //debugger
+        
+        
+
     }, [articles])
+
+    
+
+
+
+    //console.log(props.user);
+
+    
+
+    const pub = props.user.is?.pub;
+
+
+
 
 
 
 
     const profileInit = () => {
+
         const tempArticles = [];
         for (let i = 0; i < articles.length; i++) {
             const article = articles[i];
@@ -64,13 +113,13 @@ const Profile = (props) => {
     }
 
 
-
-
+    //console.log(articles.length, 'rendering');
+    // console.log(articles)
     return (
         <main>
             <AppBar user={props.user} loggedIn={props.loggedIn} setLoggedIn={props.setLoggedIn} />
             <div className="flex flex-col items-center">
-                <h1 className="text-5xl">{props.profile.username}'s Profile</h1>
+                <h1 className="text-5xl">{username}'s Profile</h1>
                 <div id="articles" className="mt-5 flex flex-col items-center">
                     <strong>Your Articles</strong>
                     {reactArticles}
@@ -83,35 +132,34 @@ const Profile = (props) => {
 
 
 
-Profile.getInitialProps = async () => {
+// Profile.getInitialProps = async () => {
 
-    let profile = { username: '', articles: [] }
-    const gun = Gun('localhost:8765/gun');
 
-    const user = gun.user()
-    user.recall({ sessionStorage: true })
+//     const gun = Gun('localhost:8765/gun');
 
-    const pub = user.is?.pub;
+//     const user = gun.user()
+//     user.recall({ sessionStorage: true })
 
-    const gunArticles = gun.get('deNewsDb/articles');
 
-    var itemFound = false;
-    await gunArticles.map(article => article !== null ? article : undefined).once((article, id) => {
-        console.log(article)
-        if (article.user === pub) {
-            itemFound = true
-            article.id = id;
-            console.log(article, id);
-            profile.articles.push(article);
-        }
-    });
+//     const gunArticles = gun.get('deNewsDb/articles');
 
-    
+//     var itemFound = false;
+//     // await gunArticles.map(article => article !== null ? article : undefined).once((article, id) => {
+//     //     console.log(article);
+//     //     if (article.user === pub) {
+//     //         itemFound = true
+//     //         article.id = id;
+//     //         console.log(article, id);
+//     //         profile.articles.push(article);
+//     //     }
+//     // });
 
 
 
-    return { profile: profile }
-}
+
+
+//     return { profile: profile }
+// }
 
 export default Profile
 
