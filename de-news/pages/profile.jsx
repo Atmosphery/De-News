@@ -11,7 +11,6 @@ import { useEffect } from "react";
 import React from "react";
 require('gun/lib/unset.js')
 require('gun/lib/path.js')
-require('../synchronous.js');
 
 
 const Profile = (props) => {
@@ -35,21 +34,22 @@ const Profile = (props) => {
         //debugger
         for (let i = 0; i < existingArticles.length; i++) {
             const article = existingArticles[i];
-            if(article === id){
+            if (article === id) {
                 return true;
             }
         }
         return false;
     }
 
+    
+
     useEffect(() => {
         (async function () {
             const existingArticles = []
-            await props.gun.get('articles').map(article => article !== null? article:undefined).on((article, id) => {
+            await props.gun.get('articles').map(article => article !== null ? article : undefined).on((article, id) => {
                 const doesExist = checkExising(existingArticles, id);
-                console.log(doesExist);
 
-                if (article.user === pub && !doesExist) {
+                if (article !== null && article.user === pub && !doesExist) {
                     existingArticles.push(id);
                     article.id = id;
                     console.log(article, id);
@@ -58,27 +58,27 @@ const Profile = (props) => {
                 }
             });
 
-            
+
             console.log(articles.length, 'article state');
             const rArticles = profileInit();
             console.log(rArticles.length, 'rArticles')
             setReactArticles(rArticles);
 
         })
-        ();
+            ();
         //debugger
-        
-        
+
+
 
     }, [articles])
 
-    
+
 
 
 
     //console.log(props.user);
 
-    
+
 
     const pub = props.user.is?.pub;
 

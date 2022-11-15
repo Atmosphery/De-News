@@ -6,6 +6,7 @@ import _ from 'lodash';
 import AppBar from '../components/appBar';
 import dynamic from "next/dynamic";
 import { useState } from 'react';
+import { useEffect } from 'react';
 const Quill = dynamic(() => import('react-quill'), { ssr: false });
 
 
@@ -16,7 +17,16 @@ const Create_article = ({ gun, user, loggedIn, setLoggedIn }) => {
     const [editorHtml, setEditorHtml] = useState('');
     const [articleAdded, setArticleAdded] = useState(<div></div>);
 
+    let username;
+
+        useEffect(() =>{
+            username = sessionStorage.getItem('currentUsername');
+            console.log(username) 
+        })
+
     const saveArticle = (event) => {
+
+        
 
         event.preventDefault();
 
@@ -33,7 +43,7 @@ const Create_article = ({ gun, user, loggedIn, setLoggedIn }) => {
         article = {
             id: '',
             user: pub,
-            author: sessionStorage.getItem('currentUser'),
+            author: username,
             title: elements.title.value,
             date: new Date().toUTCString(),
             text: editorHtml
