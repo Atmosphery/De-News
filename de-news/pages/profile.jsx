@@ -121,7 +121,7 @@ const Profile = (props) => {
             <div className="flex flex-col items-center">
                 <h1 className="text-5xl">{username}'s Profile</h1>
                 <div id="articles" className="mt-5 flex flex-col items-center">
-                    <strong>Your Articles</strong>
+                    <h2><strong>Your Articles</strong></h2>
                     {reactArticles}
                 </div>
             </div>
