@@ -54,6 +54,7 @@ class AppBar extends Component {
     Logout = () => {
         this.props.user.leave();
         this.props.setLoggedIn(this.checkLogin());
+        sessionStorage.setItem('currentUsername', '')
         Router.push('/');
     }
 

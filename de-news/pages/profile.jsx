@@ -18,10 +18,17 @@ const Profile = (props) => {
     const router = useRouter();
 
 
-    if (!props.user.is) {
+    
 
-        router.push('/login');
-    }
+    useEffect(() => {
+        if (router && router.query) {
+            console.log(router.query);
+            if (!props.user.is) {
+
+                router.push('/login');
+            }
+        }
+    }, [router]);
 
     let profile = { username: '', articles: [] };
     const username = useState(sessionStorage.getItem('currentUsername'));
