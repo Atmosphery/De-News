@@ -111,9 +111,5 @@ const Create_article = ({ gun, user, loggedIn, setLoggedIn }) => {
     );
 }
 
-
-
-
-
 export default Create_article;
 

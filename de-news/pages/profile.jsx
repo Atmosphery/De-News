@@ -79,21 +79,7 @@ const Profile = (props) => {
 
     }, [articles])
 
-
-
-
-
-    //console.log(props.user);
-
-
-
     const pub = props.user.is?.pub;
-
-
-
-
-
-
 
     const profileInit = () => {
 
@@ -137,36 +123,6 @@ const Profile = (props) => {
     )
 }
 
-
-
-// Profile.getInitialProps = async () => {
-
-
-//     const gun = Gun('localhost:8765/gun');
-
-//     const user = gun.user()
-//     user.recall({ sessionStorage: true })
-
-
-//     const gunArticles = gun.get('deNewsDb/articles');
-
-//     var itemFound = false;
-//     // await gunArticles.map(article => article !== null ? article : undefined).once((article, id) => {
-//     //     console.log(article);
-//     //     if (article.user === pub) {
-//     //         itemFound = true
-//     //         article.id = id;
-//     //         console.log(article, id);
-//     //         profile.articles.push(article);
-//     //     }
-//     // });
-
-
-
-
-
-//     return { profile: profile }
-// }
 
 export default Profile
 
