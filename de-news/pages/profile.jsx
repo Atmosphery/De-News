@@ -1,11 +1,9 @@
 import { _GunRoot } from "gun"
-
 import 'gun/sea';
 import { useRouter } from "next/router"
 import { useState } from "react";
 import AppBar from "../components/appBar";
-import Article from "../components/Article";
-import Gun from 'gun'
+import ProfileArticle from "../components/ProfileArticle";
 import _ from 'lodash'
 import { useEffect } from "react";
 import React from "react";
@@ -16,9 +14,6 @@ require('gun/lib/path.js')
 const Profile = (props) => {
 
     const router = useRouter();
-
-
-    
 
     useEffect(() => {
         if (router && router.query) {
@@ -88,7 +83,7 @@ const Profile = (props) => {
             const article = articles[i];
             //console.log(article.text)
             tempArticles.push(
-                <Article
+                <ProfileArticle
                     setArticles={setArticles}
                     articles={articles}
                     author={article.author}

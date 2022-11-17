@@ -50,7 +50,7 @@ class Signup extends Component {
                         <button className='btn mt-4'>Sign up</button>
                     </div>
                     <div className="mt-5">
-                        <Link href={'/login'}><a><strong>Already have an account?</strong></a></Link>
+                        <Link href={'/login'}><strong>Already have an account?</strong></Link>
                     </div>
                 </form>
             </div>

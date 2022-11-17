@@ -149,8 +149,7 @@ const Article = (props) => {
                 <div className='flex items-end'>
                     <div className='flex-1'>
                         <div className='flex'><p className='mr-2'>By:</p><p id='author' onClick={clickItem}>{props.author}</p></div>
-                        <div><p className='mr-2'>Posted:</p><p id='date' onClick={clickItem}>{props.date}</p></div>
-                        <p>{itemClicked.toString()}</p>
+                        <div><p className='mr-2'>Posted:</p><p id='date'>{props.date}</p></div>
                     </div>
                     <button className='btn btn-sm btn-outline mt-1' onClick={handleDelete}>Delete</button>
 
