@@ -14,7 +14,7 @@ const Create_article = ({ gun, user, loggedIn, setLoggedIn }) => {
 
     let article = { id: '', author: '', title: '', date: '', text: '' };
 
-    const [editorHtml, setEditorHtml] = useState('');
+    const [editorHtml, setEditorHtml] = useState('</br></br></br></br></br></br></br></br></br></br></br></br></br></br></br>');
     const [articleAdded, setArticleAdded] = useState(<div></div>);
 
     let username;

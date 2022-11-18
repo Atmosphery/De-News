@@ -79,7 +79,6 @@ class AppBar extends Component {
                 </div>
 
 
-
                 <div className='navbar-end'>
                     <div className='dropdown'>
                         <label tabIndex={0} className='btn btn-circle btn-ghost'>

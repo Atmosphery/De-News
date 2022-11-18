@@ -29,7 +29,7 @@ const Article = (props) => {
             <div className={'p-3 border-2 border-solid border-black w-screen max-w-7xl'}>
                 <div className='flex flex-col items-center'>
                     <h1 id='title' >{props.title}</h1>
-                    <div id='text' className='m-5'>{parse(props.text)}</div>
+                    <div id='text'>{parse(props.text)}</div>
                 </div>
                 <div className='flex items-end'>
                     <div className='flex-1'>

@@ -58,8 +58,6 @@ const Index = ({ gun, user, loggedIn, setLoggedIn }) => {
       ();
     //debugger
 
-
-
   }, [])
 
   function shuffleArray(array) {
