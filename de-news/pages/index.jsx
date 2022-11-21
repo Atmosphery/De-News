@@ -31,7 +31,7 @@ const Index = ({ gun, user, loggedIn, setLoggedIn }) => {
     return false;
   }
 
-
+  console.log(user);
 
   useEffect(() => {
     (async function () {
@@ -99,23 +99,13 @@ const Index = ({ gun, user, loggedIn, setLoggedIn }) => {
   return (
     <main>
       <AppBar user={user} loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
-
       <div className="flex flex-col items-center">
-
         <h1 className='font-bold underline'>Today's News</h1>
         {reactArticles}
       </div>
-
     </main>
   );
 }
-
-
-
-
-
-
-
 
 export default Index;
 
