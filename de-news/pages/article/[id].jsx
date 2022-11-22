@@ -26,7 +26,6 @@ const ArticleView = ({ gun, user, loggedIn, setLoggedIn }) => {
 
     return (
         <main>
-            <AppBar user={user} loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
             <div className='flex flex-col items-center'>
                 <h1 id='title' >{currentArticle.title}</h1>
                 <div id='text' className='m-5'>{currentArticle.text}</div>

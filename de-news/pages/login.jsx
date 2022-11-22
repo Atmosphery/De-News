@@ -39,7 +39,6 @@ const Login = (props) => {
 
     return (
         <main>
-            <AppBar user={props.user} loggedIn={props.loggedIn} setLoggedIn={props.setLoggedIn} />
             <div className="m-5">
                 <form className="flex-row" onSubmit={login}>
                     <div>

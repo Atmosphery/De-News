@@ -34,7 +34,6 @@ class Signup extends Component {
     render() {
         return (
             <main>
-            <AppBar user={this.props.user} loggedIn={this.props.loggedIn} setLoggedIn={this.props.setLoggedIn} />
             <div className="m-5">
                 <form className="flex-row" onSubmit={this.signup}>
                     <div>

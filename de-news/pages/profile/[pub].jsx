@@ -17,7 +17,6 @@ const ProfileView = (props) => {
 
     return(
         <main>
-            <AppBar user={props.user} loggedIn={props.loggedIn} setLoggedIn={props.setLoggedIn} />
             <div>
                 {pub}
             </div>

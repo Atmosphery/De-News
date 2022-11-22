@@ -3,12 +3,12 @@ import { useEffect, useState } from 'react'
 import Gun, { IGunInstance, IGunUserInstance } from 'gun';
 import { initializeGun } from './api/GunApi'
 import 'react-quill/dist/quill.snow.css'
+import Layout from '../components/Layout';
+
 
 
 
 function MyApp({ Component, pageProps }) {
-
-  
 
   let gun = Gun('localhost:8765/gun')
 
@@ -20,7 +20,12 @@ function MyApp({ Component, pageProps }) {
   let [loggedIn, setLoggedIn] = useState(false);
 
 
+  
+
+  
+
   return (
+    <Layout user={user} loggedIn={loggedIn} setLoggedIn={setLoggedIn}>
       <Component
         {...pageProps}
         gun={gun}
@@ -28,6 +33,7 @@ function MyApp({ Component, pageProps }) {
         loggedIn={loggedIn}
         setLoggedIn={setLoggedIn}
       />
+    </Layout>
   )
 
 }

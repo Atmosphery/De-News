@@ -56,7 +56,6 @@ const Profile = (props) => {
                     article.id = id;
                     console.log(article, id);
                     profile.articles.push(article);
-                    //setArticles(tempArr);
                 }
             });
 
@@ -68,7 +67,6 @@ const Profile = (props) => {
 
         })
             ();
-        //debugger
 
 
 
@@ -81,7 +79,6 @@ const Profile = (props) => {
         const tempArticles = [];
         for (let i = 0; i < articles.length; i++) {
             const article = articles[i];
-            //console.log(article.text)
             tempArticles.push(
                 <ProfileArticle
                     setArticles={setArticles}
@@ -105,7 +102,6 @@ const Profile = (props) => {
     // console.log(articles)
     return (
         <main>
-            <AppBar user={props.user} loggedIn={props.loggedIn} setLoggedIn={props.setLoggedIn} />
             <div className="flex flex-col items-center">
                 <h1 className="text-5xl">{username}'s Profile</h1>
                 <div id="articles" className="mt-5 flex flex-col items-center">

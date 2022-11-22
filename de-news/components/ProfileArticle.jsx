@@ -143,7 +143,6 @@ const Article = (props) => {
         <div className='mt-5 mb-5'>
             <div className={'p-3 border-2 border-solid border-black w-screen max-w-7xl'}>
                 <div className='flex flex-col items-center'>
-                    <h1 id='title' onClick={clickItem}>{props.title}</h1>
                     <div id='text' onClick={handleTextClick} className='m-5'>{textEditState}</div>
                 </div>
                 <div className='flex items-end'>

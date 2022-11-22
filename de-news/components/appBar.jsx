@@ -4,28 +4,32 @@ import Router from 'next/router';
 import React, { Component } from 'react';
 import { CgProfile } from 'react-icons/cg'
 import { HiMenuAlt1 } from 'react-icons/hi'
+import { themeChange } from 'theme-change'
+import { useEffect } from 'react'
 
 
 
 
 
+const AppBar = (props) => {
 
-class AppBar extends Component {
 
-    constructor(props) {
-        super(props);
 
-        this.props.setLoggedIn(this.checkLogin());
 
-        this.checkLogin = this.checkLogin.bind(this)
-        this.Login = this.Login.bind(this);
-        this.Logout = this.Logout.bind(this);
+    const themeValues = [
+        "cupcake",
+        "forest",
+        "Aqua",
+        "light"
+    ]
 
-    }
+    useEffect(() => {
+        themeChange(false);
+    }, [])
 
-    checkLogin = () => {
+    const checkLogin = () => {
         //let user = gun.user();
-        if (this.props.user.is) {
+        if (props.user.is) {
             console.log('You are logged in');
             return true
         } else {
@@ -34,70 +38,78 @@ class AppBar extends Component {
         }
     }
 
-
-    componentDidMount() {
-        this.props.user.recall({ sessionStorage: true })
-    }
-
-    handleLoginbtnClick = () => {
-        if (this.checkLogin()) {
-            this.Logout()
+    const handleLoginbtnClick = () => {
+        if (checkLogin()) {
+            Logout()
         } else {
-            this.Login()
+            Login()
         }
     }
 
-    Login = () => {
+    const Login = () => {
         Router.push('/login')
     }
 
-    Logout = () => {
-        this.props.user.leave();
-        this.props.setLoggedIn(this.checkLogin());
+    const Logout = () => {
+        props.user.leave();
+        props.setLoggedIn(checkLogin());
         sessionStorage.setItem('currentUsername', '')
         Router.push('/');
     }
+    props.setLoggedIn(checkLogin());
 
 
-    render() {
-        return (
+    return (
 
-            <div className='navbar bg-gray-900'>
-                <div className='navbar-start'>
-                    <div className='dropdown'>
-                        <label tabIndex={0} className='btn btn-ghost btn-circle'>
-                            <HiMenuAlt1 size={25} />
-                        </label>
-                        <ul tabIndex={0} className='menu dropdown-content mt-3 p-3 shadow bg-gray-900 rounded-box w-52'>
-                            <li><Link href={'/'}>Homepage</Link></li>
-                            <li><a>Article of the Day</a></li>
-                        </ul>
-                    </div>
-                    <Link href='/'>
-                        <button className='ml-3 hover:text-blue-500 text-3xl font-bold'>De-News!</button>
-                    </Link>
+        <div className='navbar'>
+            <div className='navbar-start'>
+                <div className='dropdown'>
+                    <label tabIndex={0} className='btn btn-ghost btn-circle'>
+                        <HiMenuAlt1 size={25} />
+                    </label>
+                    <ul tabIndex={0} className='menu dropdown-content mt-3 p-3 shadow bg-gray-900 rounded-box w-52'>
+                        <li><Link href={'/'}>Homepage</Link></li>
+                        <li><a>Article of the Day</a></li>
+                    </ul>
+                </div>
+                <Link href='/'>
+                    <button className='ml-3 hover:text-blue-500 text-3xl font-bold'>De-News!</button>
+                </Link>
+            </div>
+
+
+            <div className='navbar-end'>
+
+                <select className=" text-primary" data-choose-theme>
+                    <option className='text-primary' disabled value="">Pick a theme</option>
+                    <option className="text-primary" option value="">Default Value</option>
+                    {themeValues.map((value) => (
+                        <option className="text-primary" key={value.toLowerCase()} value={value.toLowerCase()}>{value}</option>
+                    ))}
+                </select>
+                <div class="form-control ml-5">
+                    <input type="text" placeholder="Search" className="input input-bordered" />
                 </div>
 
+                <div className='dropdown ml-5'>
+                    <label tabIndex={0} className='btn btn-circle'>
+                        <CgProfile size={45} />
+                    </label>
 
-                <div className='navbar-end'>
-                    <div className='dropdown'>
-                        <label tabIndex={0} className='btn btn-circle btn-ghost'>
-                            <CgProfile size={35} />
-                        </label>
-                        <ul tabIndex={0} className='menu dropdown-content rounded-box w-48 mt-3 bg-gray-900'>
-                            <li><Link href={'/profile'}>Profile</Link></li>
-                            <li><Link href={'/login'}>Your Articles</Link></li>
-                            <li><button onClick={this.handleLoginbtnClick}>{(this.props.loggedIn) ? 'Sign out' : 'Login'}</button></li>
-                        </ul>
-
-                    </div>
-                    <Link href={'/create_article'}>
-                        <button className='btn bg-gray-700 ml-5 text-sm'>Post an article!</button>
-                    </Link>
+                    <ul tabIndex={0} className='menu dropdown-content rounded-box w-48 mt-3'>
+                        <li><Link href={'/profile'}>Profile</Link></li>
+                        <li><Link href={'/login'}>Your Articles</Link></li>
+                        <li><button onClick={handleLoginbtnClick}>{(props.loggedIn) ? 'Sign out' : 'Login'}</button></li>
+                    </ul>
                 </div>
             </div>
-        );
-    }
+
+
+            <Link href={'/create_article'}>
+                <button className='btn text-sm ml-5'>Post an article!</button>
+            </Link>
+        </div>
+    );
 
 
 }
