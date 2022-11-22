@@ -97,7 +97,7 @@ const Index = ({ gun, user, loggedIn, setLoggedIn }) => {
 
   return (
     <main>
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center z-0 bg-">
         <h1 className='font-bold underline'>Today's News</h1>
         {reactArticles}
       </div>

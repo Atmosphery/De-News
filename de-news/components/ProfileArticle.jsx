@@ -34,7 +34,8 @@ const Article = (props) => {
 
 
     const handleDelete = async (event) => {
-        
+        // debugger
+        console.log(props.id);
         await gunArticles.map().once((data, id) => {
             if (id === props.id) {
                 
@@ -44,8 +45,15 @@ const Article = (props) => {
         });
 
         let arrRef = props.articles
-        let newArr = arrRef.filter(article => article.id !== props.id);
-        props.setArticles(newArr);
+        //let newArr = arrRef.filter();
+        //console.log(newArr);
+        props.setArticles(state => {
+            console.log(state)
+            let filtered = state.filter(article => article.id !== props.id);
+            console.log(filtered);
+            return filtered
+            });
+        
     }
 
     const clickItem = (element) => {

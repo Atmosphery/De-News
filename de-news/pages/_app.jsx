@@ -32,6 +32,7 @@ function MyApp({ Component, pageProps }) {
         user={user}
         loggedIn={loggedIn}
         setLoggedIn={setLoggedIn}
+        
       />
     </Layout>
   )

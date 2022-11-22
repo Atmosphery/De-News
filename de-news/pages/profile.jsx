@@ -2,7 +2,6 @@ import { _GunRoot } from "gun"
 import 'gun/sea';
 import { useRouter } from "next/router"
 import { useState } from "react";
-import AppBar from "../components/appBar";
 import ProfileArticle from "../components/ProfileArticle";
 import _ from 'lodash'
 import { useEffect } from "react";
@@ -47,6 +46,7 @@ const Profile = (props) => {
 
     useEffect(() => {
         (async function () {
+            console.log(articles);
             const existingArticles = []
             await props.gun.get('articles').map(article => article !== null ? article : undefined).on((article, id) => {
                 const doesExist = checkExising(existingArticles, id);
@@ -54,7 +54,6 @@ const Profile = (props) => {
                 if (article !== null && article.user === pub && !doesExist) {
                     existingArticles.push(id);
                     article.id = id;
-                    console.log(article, id);
                     profile.articles.push(article);
                 }
             });
@@ -62,7 +61,7 @@ const Profile = (props) => {
 
             console.log(articles.length, 'article state');
             const rArticles = profileInit();
-            console.log(rArticles.length, 'rArticles')
+            console.log(rArticles, 'rArticles')
             setReactArticles(rArticles);
 
         })
@@ -75,7 +74,7 @@ const Profile = (props) => {
     const pub = props.user.is?.pub;
 
     const profileInit = () => {
-
+        
         const tempArticles = [];
         for (let i = 0; i < articles.length; i++) {
             const article = articles[i];
