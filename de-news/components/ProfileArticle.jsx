@@ -34,9 +34,10 @@ const Article = (props) => {
 
 
     const handleDelete = async (event) => {
-        debugger
+        
         await gunArticles.map().once((data, id) => {
             if (id === props.id) {
+                
                 gunArticles.get(id).put(null);
                 console.log(`${data.title} is deleted`);
             }
@@ -58,7 +59,7 @@ const Article = (props) => {
             if (elementName !== 'input') {
 
                 let elementHTML = target.innerHTML;
-                //debugger
+                
 
                 //Chnage html to an input
                 target.innerHTML = `<input id='${elementId}' value='${elementHTML}'/>`;

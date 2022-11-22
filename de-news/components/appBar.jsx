@@ -79,24 +79,24 @@ const AppBar = (props) => {
 
 
             <div className='navbar-end'>
-
-                <select className=" text-primary" data-choose-theme>
+                
+                <select className=" text-primary select select-primary" data-choose-theme>
                     <option className='text-primary' disabled value="">Pick a theme</option>
                     <option className="text-primary" option value="">Default Value</option>
                     {themeValues.map((value) => (
                         <option className="text-primary" key={value.toLowerCase()} value={value.toLowerCase()}>{value}</option>
                     ))}
                 </select>
-                <div class="form-control ml-5">
+                <div className="form-control ml-5">
                     <input type="text" placeholder="Search" className="input input-bordered" />
                 </div>
 
                 <div className='dropdown ml-5'>
-                    <label tabIndex={0} className='btn btn-circle'>
+                    <label tabIndex={0} className='btn btn-primary btn-circle'>
                         <CgProfile size={45} />
                     </label>
 
-                    <ul tabIndex={0} className='menu dropdown-content rounded-box w-48 mt-3'>
+                    <ul tabIndex={0} className='menu dropdown-content rounded-box w-48 mt-3 shadow-2xl'>
                         <li><Link href={'/profile'}>Profile</Link></li>
                         <li><Link href={'/login'}>Your Articles</Link></li>
                         <li><button onClick={handleLoginbtnClick}>{(props.loggedIn) ? 'Sign out' : 'Login'}</button></li>
@@ -106,7 +106,7 @@ const AppBar = (props) => {
 
 
             <Link href={'/create_article'}>
-                <button className='btn text-sm ml-5'>Post an article!</button>
+                <button className='btn btn-primary text-sm ml-5 mr-5'>Post an article!</button>
             </Link>
         </div>
     );
