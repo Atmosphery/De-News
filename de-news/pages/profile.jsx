@@ -42,7 +42,7 @@ const Profile = (props) => {
         return false;
     }
 
-    
+
 
     useEffect(() => {
         (async function () {
@@ -60,25 +60,7 @@ const Profile = (props) => {
 
 
             console.log(articles.length, 'article state');
-            const rArticles = profileInit();
-            console.log(rArticles, 'rArticles')
-            setReactArticles(rArticles);
-
-        })
-            ();
-
-
-
-    }, [articles])
-
-    const pub = props.user.is?.pub;
-
-    const profileInit = () => {
-        
-        const tempArticles = [];
-        for (let i = 0; i < articles.length; i++) {
-            const article = articles[i];
-            tempArticles.push(
+            let reacifyArticles = articles.map((article, i) =>
                 <ProfileArticle
                     setArticles={setArticles}
                     articles={articles}
@@ -89,12 +71,23 @@ const Profile = (props) => {
                     text={article.text}
                     title={article.title}
                     gun={props.gun.get('articles')}
-                    key={i}
-                />
-            );
-        }
-        return tempArticles;
-    }
+                    key={_.get(article, "_.#", undefined)}
+                />)
+            
+            setReactArticles(reacifyArticles);
+            //setReactArticles(reacifyArticles);
+            console.log(reactArticles);
+
+        })
+            ();
+
+
+
+    }, [articles])
+
+    const pub = props.user.is?.pub;
+
+
 
 
     //console.log(articles.length, 'rendering');

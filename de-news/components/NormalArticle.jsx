@@ -11,7 +11,7 @@ const Article = (props) => {
 
     return (
         <div className='m-10'>
-            <div className={'card p-5 max-w-screen-2xl whitespace-pre-wrap bg-base-200 shadow-xl hover:border border-primary'}>
+            <div className={'card p-5 max-w-screen-2xl bg-base-200 shadow-xl hover:border border-primary '}>
                 <Link href={`/article/${props.id}`}>
                     <span id='text' className='card-body inline-block'>{parse(props.text)}</span>
                 </Link>

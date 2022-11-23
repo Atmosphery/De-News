@@ -39,6 +39,14 @@ const AppBar = (props) => {
         }
     }
 
+    const handleSearch = (e) => {
+        const search = e.target.value;
+
+        
+
+        console.log(search);
+    }
+
     const handleLoginbtnClick = () => {
         if (checkLogin()) {
             Logout()
@@ -62,10 +70,10 @@ const AppBar = (props) => {
 
     return (
 
-        <nav className='sticky top-0 navbar z-10 shadow-xl bg-base-100 bg-opacity-95'>
+        <nav className='sticky top-0 navbar z-10 shadow-xl bg-base-300 bg-opacity-95'>
             <div className='navbar-start'>
                 <div className='dropdown'>
-                    <label tabIndex={0} className='btn btn-circle'>
+                    <label tabIndex={0} className='btn bg-base-100 btn-circle border-base-200'>
                         <HiMenuAlt1 size={25} />
                     </label>
                     <ul tabIndex={0} className='menu dropdown-content mt-3 p-3 shadow rounded-box w-52'>
@@ -89,7 +97,7 @@ const AppBar = (props) => {
                     ))}
                 </select>
                 <div className="form-control ml-5">
-                    <input type="text" placeholder="Search" className="input input-bordered" />
+                    <input type="text" placeholder="Search" className="input input-bordered" onChange={handleSearch} />
                 </div>
 
                 <div className='dropdown dropdown-end ml-5'>
@@ -107,7 +115,7 @@ const AppBar = (props) => {
 
 
             <Link href={'/create_article'}>
-                <button className='btn text-sm ml-5 mr-5'>Post an article!</button>
+                <button className='btn bg-base-100 border-base-200 text-sm ml-5 mr-5'>Post an article!</button>
             </Link>
         </nav>
     );

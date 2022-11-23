@@ -38,9 +38,9 @@ const Article = (props) => {
         console.log(props.id);
         await gunArticles.map().once((data, id) => {
             if (id === props.id) {
-                
+
                 gunArticles.get(id).put(null);
-                console.log(`${data.title} is deleted`);
+                console.log(`${data} is deleted`);
             }
         });
 
@@ -52,8 +52,9 @@ const Article = (props) => {
             let filtered = state.filter(article => article.id !== props.id);
             console.log(filtered);
             return filtered
-            });
-        
+        });
+        console.log(articles);
+
     }
 
     const clickItem = (element) => {
@@ -67,7 +68,7 @@ const Article = (props) => {
             if (elementName !== 'input') {
 
                 let elementHTML = target.innerHTML;
-                
+
 
                 //Chnage html to an input
                 target.innerHTML = `<input id='${elementId}' value='${elementHTML}'/>`;
@@ -90,7 +91,6 @@ const Article = (props) => {
 
     useEffect(() => {
         console.log(itemClicked, 'itemClicked');
-        console.log(editorHtml);
         console.log(submit, "submit")
         if (submit) {
             let element = $('#text').get(0);
@@ -150,7 +150,7 @@ const Article = (props) => {
 
     return (
         <div className='mt-5 mb-5'>
-            <div className={'card p-5 w-screen max-w-3xl bg-base-200 shadow-xl '}>
+            <div className={'card p-5 max-w-screen-2xl whitespace-pre-wrap bg-base-200 shadow-xl hover:border border-primary '}>
                 <div className='flex flex-col items-center'>
                     <div id='text' onClick={handleTextClick} className='card-body m-5'>{textEditState}</div>
                 </div>
