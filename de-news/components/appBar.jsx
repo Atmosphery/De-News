@@ -39,10 +39,17 @@ const AppBar = (props) => {
         }
     }
 
-    const handleSearch = (e) => {
+    const handleSearch = async(e) => {
         const search = e.target.value;
+        const gun = props.gun.get('articles');
+        await gun.map(article => article !== null ? article : undefined).once((article) => {
 
-        
+            if (article.text.includes(search)) {
+                console.log(article);
+
+            }
+        })
+
 
         console.log(search);
     }
@@ -88,7 +95,7 @@ const AppBar = (props) => {
 
 
             <div className='navbar-end'>
-                
+
                 <select className="select" data-choose-theme>
                     <option disabled value="">Pick a theme</option>
                     <option option value="">Default Value</option>

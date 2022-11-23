@@ -19,14 +19,14 @@ const Create_article = ({ gun, user, loggedIn, setLoggedIn }) => {
 
     let username;
 
-        useEffect(() =>{
-            username = sessionStorage.getItem('currentUsername');
-            console.log(username) 
-        })
+    useEffect(() => {
+        username = sessionStorage.getItem('currentUsername');
+        console.log(username)
+    })
 
     const saveArticle = (event) => {
 
-        
+
 
         event.preventDefault();
 
@@ -44,6 +44,7 @@ const Create_article = ({ gun, user, loggedIn, setLoggedIn }) => {
             id: '',
             user: pub,
             author: username,
+            title: elements.title.value,
             date: new Date().toUTCString(),
             text: editorHtml
         }
@@ -58,7 +59,7 @@ const Create_article = ({ gun, user, loggedIn, setLoggedIn }) => {
                     console.log(ack.err);
                 } else {
                     console.log('Data Sucessfully inserted')
-                    setArticleAdded(<h2 className='text-green-700'>Article was added</h2>);
+                    setArticleAdded(<h2 className='text-green-700'>Article '{article.title}' was added</h2>);
 
                 }
 
@@ -77,6 +78,11 @@ const Create_article = ({ gun, user, loggedIn, setLoggedIn }) => {
             <div className='m-10 '>
                 <form onSubmit={saveArticle} className='flex'>
                     <div className='flex-col w-screen max-w-6xl'>
+                        <div>
+                            <label>Title</label><br />
+                            <input name='title' className='input input-bordered w-full max-w-sm' />
+                        </div>
+
                         <div className='mt-5'>
                             <label>Text</label><br />
                             <div className='mt-2'>

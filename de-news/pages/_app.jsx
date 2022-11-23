@@ -25,7 +25,7 @@ function MyApp({ Component, pageProps }) {
   
 
   return (
-    <Layout user={user} loggedIn={loggedIn} setLoggedIn={setLoggedIn}>
+    <Layout gun={gun} user={user} loggedIn={loggedIn} setLoggedIn={setLoggedIn}>
       <Component
         {...pageProps}
         gun={gun}

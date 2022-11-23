@@ -152,6 +152,7 @@ const Article = (props) => {
         <div className='mt-5 mb-5'>
             <div className={'card p-5 max-w-screen-2xl whitespace-pre-wrap bg-base-200 shadow-xl hover:border border-primary '}>
                 <div className='flex flex-col items-center'>
+                    <h1 id='title' onClick={clickItem}>{props.title}</h1>
                     <div id='text' onClick={handleTextClick} className='card-body m-5'>{textEditState}</div>
                 </div>
                 <div className='flex items-end'>

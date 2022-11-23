@@ -13,6 +13,7 @@ const Article = (props) => {
         <div className='m-10'>
             <div className={'card p-5 max-w-screen-2xl bg-base-200 shadow-xl hover:border border-primary '}>
                 <Link href={`/article/${props.id}`}>
+                    <h1 id='title' >{props.title}</h1>
                     <span id='text' className='card-body inline-block'>{parse(props.text)}</span>
                 </Link>
                 <div className='card-actions flex items-end'>
