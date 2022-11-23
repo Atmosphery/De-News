@@ -57,6 +57,10 @@ const Article = (props) => {
 
     }
 
+    gunArticles.on((value) => {
+        console.log(value);
+    })
+
     const clickItem = (element) => {
         if (!itemClicked) {
             setClicked(true);

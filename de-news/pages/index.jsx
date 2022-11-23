@@ -3,7 +3,7 @@ import { useState } from "react";
 import AppBar from '../components/appBar';
 import { useEffect } from "react";
 import Article from '../components/NormalArticle'
-
+import SearchBar from "../components/SearchBar";
 
 
 
@@ -97,9 +97,17 @@ const Index = ({ gun, user, loggedIn, setLoggedIn }) => {
 
   return (
     <main>
-      <div className="flex flex-col items-center z-0 bg-">
-        <h1 className='font-bold underline'>Today's News</h1>
-        {reactArticles}
+      <div className="flex">
+        <div className="flex-1 flex-col items-center z-0">
+          <h1 className='font-bold underline ml-5'>The News</h1>
+          {reactArticles}
+        </div>
+
+        <div className="flex-none max-w-xs">
+          <div className="mt-5 mr-5">
+            <SearchBar placeholder={"Search"} gun={gun.get('articles')} />
+          </div>
+        </div>
       </div>
     </main>
   );
