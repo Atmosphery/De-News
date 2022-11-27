@@ -2,6 +2,8 @@
 gun/
 /pages/public
 
+
+
 # dependencies
 /node_modules
 /.pnp

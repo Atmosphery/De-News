@@ -135,9 +135,8 @@ const Create_article = ({ gun, user, loggedIn, setLoggedIn }) => {
             text: editorHtml
         }
 
-        console.log(_data.path);
 
-        if (_data.path !== '') {
+        if (_data !== undefined && _data.path !== '') {
 
             article.thumbnail = _data.path;
         }
