@@ -15,7 +15,7 @@ import SearchBar from "../components/SearchBar";
 //{gun, user, setUser}: IProps
 const Index = ({ gun, user, loggedIn, setLoggedIn }) => {
 
-  const [articles, setArticles] = useState([]);
+  const articles = []
   const [reactArticles, setReactArticles] = useState([]);
   //
 
@@ -43,7 +43,7 @@ const Index = ({ gun, user, loggedIn, setLoggedIn }) => {
           article.id = id;
           console.log(article, id);
           articles.push(article);
-          //setArticles(tempArr);
+
         }
       });
 

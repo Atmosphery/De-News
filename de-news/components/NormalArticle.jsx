@@ -16,7 +16,6 @@ const Article = (props) => {
 
 
 
-    console.log(props.thumbnail)
 
 
     const [thumbnail, setThumbnail] = useState('');
