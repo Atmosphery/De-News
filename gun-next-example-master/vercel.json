@@ -1,7 +1,0 @@
-{
-  "version": 2,
-  "scope": "zrrrzzt",
-  "env": {
-    "NODE_ENV": "production"
-  }
-}

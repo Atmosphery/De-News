@@ -10,7 +10,7 @@ import Layout from '../components/Layout';
 
 function MyApp({ Component, pageProps }) {
 
-  let gun = Gun(['https://gun-us.herokuapp.com/gun', 'localhost:8765/gun' ]);
+  let gun = Gun(['https://gun-us.herokuapp.com/gun', 'http://localhost:8765/gun' ]);
 
   let user = gun.user();
 

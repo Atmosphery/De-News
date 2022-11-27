@@ -1,7 +1,0 @@
-.github
-.next
-node_modules
-.travis.yml
-renovate.json
-out
-ossl
