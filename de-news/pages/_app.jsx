@@ -1,7 +1,7 @@
 import '../styles/globals.css'
 import { useEffect, useState } from 'react'
-import Gun, { IGunInstance, IGunUserInstance } from 'gun';
-import { initializeGun } from './api/GunApi'
+import Gun from 'gun';
+import { initializeGun } from './api/GunApi' // this import keeps user from being undefined even though it is not being used????
 import 'react-quill/dist/quill.snow.css'
 import Layout from '../components/Layout';
 
@@ -10,9 +10,9 @@ import Layout from '../components/Layout';
 
 function MyApp({ Component, pageProps }) {
 
-  let gun = Gun('localhost:8765/gun')
+  let gun = Gun(['https://gun-us.herokuapp.com/gun', 'localhost:8765/gun' ]);
 
-  let user = gun.user()
+  let user = gun.user();
 
   gun = gun.get('deNewsDb');
 

@@ -12,6 +12,7 @@ module.exports = (phase, { defaultConfig }) => {
 
 module.exports = {
   webpack: (config, options) => {
+    config.resolve.fallback = { fs: false };
     config.module.noParse = [/gun\.js$/, /sea\.js$/];
     return config;
   },

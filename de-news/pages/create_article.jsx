@@ -3,14 +3,92 @@
 import React from 'react';
 //import not from 'gun/lib/not.js';
 import _ from 'lodash';
-import AppBar from '../components/appBar';
 import dynamic from "next/dynamic";
-import { useState } from 'react';
-import { useEffect } from 'react';
-const Quill = dynamic(() => import('react-quill'), { ssr: false });
+
+import axios from 'axios';
+import { useEffect, useMemo, useRef, useState } from "react";
+//const Quill = dynamic(() => import('react-quill').then(md => md.default), { ssr: false });
+const ReactQuill = dynamic(
+    async () => {
+        const { default: RQ } = await import("react-quill");
+        const { default: QU } = await import("@writergate/quill-image-uploader-nextjs");
+        console.log("QU", QU);
+        RQ.Quill.register("modules/imageUploader", QU);
+
+
+
+        return function forwardRef({ forwardedRef, ...props }) {
+            return <RQ ref={forwardedRef} {...props} />;
+        };
+    },
+    {
+        ssr: false
+    }
+);
+
+
+
+
 
 
 const Create_article = ({ gun, user, loggedIn, setLoggedIn }) => {
+
+
+
+
+    const modules = useMemo(
+        () => ({
+
+            imageUploader: {
+                upload: (file) => {
+                    return new Promise(async (resolve, reject) => {
+                        console.log(file);
+                        const formData = new FormData();
+                        formData.append("myImage", file);
+                        const { data } = await axios.post('/api/image', formData);
+
+                        resolve(
+                            "/images/" + data.path
+                        );
+
+                    });
+                }
+            },
+            toolbar: {
+                container: [
+                    [{ header: [1, 2, 3, 4, false] }],
+                    ["bold", "italic", "underline", "strike", "blockquote"],
+                    [{ color: [] }, { background: [] }],
+                    [
+                        { align: [] },
+                        { list: "ordered" },
+                        { list: "bullet" },
+                        { indent: "-1" },
+                        { indent: "+1" }
+                    ],
+                    ["link", "image"],
+                    ["clean"]
+                ],
+                handlers: {
+                    image: (e) => {
+                        console.log("imageHandler", e);
+                        return e;
+                    }
+                }
+            }
+        }),
+        []
+    );
+    /*
+    
+    */
+
+    const formats = [
+        'header',
+        'bold', 'italic', 'underline', 'strike', 'blockquote',
+        'list', 'bullet', 'indent',
+        'link', 'image'
+    ]
 
     let article = { id: '', author: '', title: '', date: '', text: '' };
 
@@ -18,13 +96,18 @@ const Create_article = ({ gun, user, loggedIn, setLoggedIn }) => {
     const [articleAdded, setArticleAdded] = useState(<div></div>);
 
     let username;
+    let _data;
+
+    const [uploading, setUploading] = useState(false);
+    const [selectedImage, setSelectedImage] = useState('');
+    const [selectedFile, setSelectedFile] = useState();
 
     useEffect(() => {
         username = sessionStorage.getItem('currentUsername');
         console.log(username)
     })
 
-    const saveArticle = (event) => {
+    const saveArticle = async (event) => {
 
 
 
@@ -40,6 +123,9 @@ const Create_article = ({ gun, user, loggedIn, setLoggedIn }) => {
             pub = user.is?.pub;
         }
 
+        await handleImageUpload();
+
+
         article = {
             id: '',
             user: pub,
@@ -47,6 +133,13 @@ const Create_article = ({ gun, user, loggedIn, setLoggedIn }) => {
             title: elements.title.value,
             date: new Date().toUTCString(),
             text: editorHtml
+        }
+
+        console.log(_data.path);
+
+        if (_data.path !== '') {
+
+            article.thumbnail = _data.path;
         }
 
 
@@ -73,6 +166,34 @@ const Create_article = ({ gun, user, loggedIn, setLoggedIn }) => {
         console.log(html)
     }
 
+    const handleImageChange = ({ target }) => {
+        if (target.files) {
+            const file = target.files[0];
+            setSelectedImage(URL.createObjectURL(file));
+            console.log(selectedImage)
+            setSelectedFile(file);
+        }
+    }
+
+    const handleImageUpload = async () => {
+        setUploading(true);
+
+        try {
+            if (!selectedFile) return;
+            const formData = new FormData();
+            formData.append("myImage", selectedFile);
+            const { data } = await axios.post('/api/image', formData);
+            _data = data;
+
+
+        } catch (error) {
+            console.log(error.response?.data);
+        }
+        setUploading(false);
+    }
+
+
+
     return (
         <main>
             <div className='m-10 '>
@@ -83,11 +204,25 @@ const Create_article = ({ gun, user, loggedIn, setLoggedIn }) => {
                             <input name='title' className='input input-bordered w-full max-w-sm' />
                         </div>
 
+                        <div className='max-w-4xl p-20'>
+                            <label>
+                                <input type="file" hidden onChange={handleImageChange} />
+                                <div className='w-40 aspect-video rounded flex items-center justify-center border-2 border-dashed cursor-pointer'>
+                                    {selectedImage ?
+                                        (<img src={selectedImage} alt="" />) :
+                                        (<span>Select Image</span>)
+                                    }
+                                </div>
+                            </label>
+                        </div>
+
                         <div className='mt-5'>
                             <label>Text</label><br />
                             <div className='mt-2'>
-                                <Quill
+                                <ReactQuill
                                     name='text'
+                                    modules={modules}
+                                    formats={formats}
                                     className='bg-white text-black w-full'
                                     theme='snow'
                                     value={editorHtml}
@@ -99,7 +234,13 @@ const Create_article = ({ gun, user, loggedIn, setLoggedIn }) => {
 
                         {articleAdded}
                         <div className='mt-5'>
-                            <button className='btn'>Add</button>
+                            <button
+                                className='btn'
+                                disabled={uploading}
+                                style={{ opacity: uploading ? '.5' : '1' }}
+                            >
+                                {uploading ? "Uploading.." : "Upload"}
+                            </button>
                         </div>
                     </div>
 

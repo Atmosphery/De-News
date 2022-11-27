@@ -82,6 +82,7 @@ const Index = ({ gun, user, loggedIn, setLoggedIn }) => {
       tempArticles.push(
         <Article
           author={article.author}
+          thumbnail={article.thumbnail}
           date={article.date}
           user={article.user}
           id={_.get(article, "_.#", undefined)}
@@ -98,9 +99,12 @@ const Index = ({ gun, user, loggedIn, setLoggedIn }) => {
   return (
     <main>
       <div className="flex">
-        <div className="flex-1 flex-col items-center z-0">
+        <div className="flex-1 items-center z-0">
           <h1 className='font-bold underline ml-5'>The News</h1>
-          {reactArticles}
+          <div className="flex flex-wrap ">
+            {reactArticles}
+          </div>
+
         </div>
 
         <div className="flex-none max-w-xs">

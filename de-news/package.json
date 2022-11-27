@@ -9,7 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@writergate/quill-image-uploader-nextjs": "^0.1.8",
+    "axios": "^1.2.0",
     "daisyui": "^2.38.0",
+    "formidable": "^2.0.1",
     "gun": "^0.2020.1238",
     "heroicons": "^2.0.12",
     "html-react-parser": "^3.0.4",

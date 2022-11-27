@@ -26,8 +26,9 @@ const ArticleView = ({ gun, user, loggedIn, setLoggedIn }) => {
 
     return (
         <main>
-            <div className='flex flex-col items-center'>
+            <div className='flex flex-col items-center ml-5'>
                 <h1 id='title' >{currentArticle.title}</h1>
+                <img src={`/images/${currentArticle.thumbnail}`} alt=''></img>
                 <div id='text' className='m-5'>{currentArticle.text}</div>
             </div>
             <div className='flex items-center ml-10'>

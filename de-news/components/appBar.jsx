@@ -8,6 +8,7 @@ import { themeChange } from 'theme-change'
 import { useEffect } from 'react'
 import SearchBar from './SearchBar';
 import { useState } from 'react';
+import {useRouter} from 'next/router'
 
 
 
@@ -16,7 +17,7 @@ import { useState } from 'react';
 
 const AppBar = (props) => {
 
-
+    const router = useRouter();
 
     const themeValues = [
         "cupcake",
@@ -71,14 +72,14 @@ const AppBar = (props) => {
     }
 
     const Login = () => {
-        Router.push('/login')
+        router.push('/login')
     }
 
     const Logout = () => {
         props.user.leave();
         props.setLoggedIn(checkLogin());
         sessionStorage.setItem('currentUsername', '')
-        Router.push('/');
+        router.push('/');
     }
     props.setLoggedIn(checkLogin());
 
@@ -108,7 +109,7 @@ const AppBar = (props) => {
                 
                 <select className="select" data-choose-theme>
                     <option disabled value="">Pick a theme</option>
-                    <option option value="">Default Value</option>
+                    <option value="">Default Value</option>
                     {themeValues.map((value) => (
                         <option key={value.toLowerCase()} value={value.toLowerCase()}>{value}</option>
                     ))}
