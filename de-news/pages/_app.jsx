@@ -10,7 +10,12 @@ import Layout from '../components/Layout';
 
 function MyApp({ Component, pageProps }) {
 
-  let gun = Gun({peers: ['https://gun-us.herokuapp.com/gun']});
+  let gun = new Gun({
+    peers: [
+      "https://gun-manhattan.herokuapp.com/gun",
+      "https://gunjs-mtl.herokuapp.com/gun"
+    ]
+  });
 
   let user = gun.user();
 
@@ -20,9 +25,9 @@ function MyApp({ Component, pageProps }) {
   let [loggedIn, setLoggedIn] = useState(false);
 
 
-  
 
-  
+
+
 
   return (
     <Layout gun={gun} user={user} loggedIn={loggedIn} setLoggedIn={setLoggedIn}>
@@ -32,7 +37,7 @@ function MyApp({ Component, pageProps }) {
         user={user}
         loggedIn={loggedIn}
         setLoggedIn={setLoggedIn}
-        
+
       />
     </Layout>
   )
