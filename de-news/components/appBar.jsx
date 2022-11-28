@@ -20,10 +20,10 @@ const AppBar = (props) => {
     const router = useRouter();
 
     const themeValues = [
-        "cupcake",
-        "forest",
+        "Cupcake",
+        "Forest",
         "Aqua",
-        "light",
+        "Light",
     ]
 
 
