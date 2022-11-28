@@ -4,7 +4,7 @@ import React from 'react';
 //import not from 'gun/lib/not.js';
 import _ from 'lodash';
 import dynamic from "next/dynamic";
-
+import { useRouter } from 'next/router';
 import axios from 'axios';
 import { useEffect, useMemo, useRef, useState } from "react";
 //const Quill = dynamic(() => import('react-quill').then(md => md.default), { ssr: false });
@@ -26,15 +26,19 @@ const ReactQuill = dynamic(
     }
 );
 
-
-
-
-
-
 const Create_article = ({ gun, user, loggedIn, setLoggedIn }) => {
 
+    const router = useRouter();
 
+    useEffect(() => {
+        if (router && router.query) {
+            console.log(router.query);
+            if (!user.is) {
 
+                router.push('/login');
+            }
+        }
+    }, [router]);
 
     const modules = useMemo(
         () => ({

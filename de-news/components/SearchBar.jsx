@@ -50,7 +50,7 @@ const SearchBar = ({ placeholder, gun}) => {
                     {filteredData.slice(0, 15).map((value, key) => {
                         return (
                             <Link href={`/article/${value['_']['#']}`}>
-                                <p className="mt-5 alert truncate text-ellipsis">{value.title}</p>
+                                <p className="mt-5 alert text-ellipsis">{value.title}</p>
                             </Link>
                         );
                     })}

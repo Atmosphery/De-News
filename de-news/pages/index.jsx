@@ -99,9 +99,9 @@ const Index = ({ gun, user, loggedIn, setLoggedIn }) => {
   return (
     <main>
       <div className="flex">
-        <div className="flex-1 items-center z-0">
+        <div className="items-center z-0">
           <h1 className='font-bold underline ml-5'>The News</h1>
-          <div className="flex flex-wrap ">
+          <div className="gap-8 columns-4">
             {reactArticles}
           </div>
 
