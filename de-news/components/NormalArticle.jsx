@@ -22,7 +22,7 @@ const Article = (props) => {
 
     useEffect(() => {
         if (props.thumbnail !== undefined) {
-            setThumbnail(<figure><img className='object-contain rounded-2xl ' src={`/images/${props.thumbnail}`} alt='' /></figure>)
+            setThumbnail(<figure><img className='object-contain rounded-2xl ' src={props.thumbnail} alt='' /></figure>)
         }
     }, [])
 

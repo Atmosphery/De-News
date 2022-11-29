@@ -48,11 +48,17 @@ const Create_article = ({ gun, user, loggedIn, setLoggedIn }) => {
                     return new Promise(async (resolve, reject) => {
                         console.log(file);
                         const formData = new FormData();
-                        formData.append("myImage", file);
-                        const { data } = await axios.post('/api/image', formData);
+
+                        formData.append("file", file);
+                        formData.append('upload_preset', 'news-images');
+
+                        const data = await fetch('https://api.cloudinary.com/v1_1/df93uxoek/image/upload', {
+                            method: 'POST',
+                            body: formData
+                        }).then(r => r.json());
 
                         resolve(
-                            "/images/" + data.path
+                            data.secure_url
                         );
 
                     });
@@ -112,12 +118,8 @@ const Create_article = ({ gun, user, loggedIn, setLoggedIn }) => {
     })
 
     const saveArticle = async (event) => {
-
-
-
         event.preventDefault();
 
-        //debugger
         var elements = event.currentTarget.elements
 
         var pub;
@@ -128,6 +130,8 @@ const Create_article = ({ gun, user, loggedIn, setLoggedIn }) => {
         }
 
         await handleImageUpload();
+        
+        console.log(_data);
 
 
         article = {
@@ -136,14 +140,13 @@ const Create_article = ({ gun, user, loggedIn, setLoggedIn }) => {
             author: username,
             title: elements.title.value,
             date: new Date().toUTCString(),
-            text: editorHtml
+            text: editorHtml,
+            thumbnail: _data
         }
 
+        
 
-        if (_data !== undefined && _data.path !== '') {
-
-            article.thumbnail = _data.path;
-        }
+        
 
 
         gun
@@ -163,7 +166,6 @@ const Create_article = ({ gun, user, loggedIn, setLoggedIn }) => {
     }
 
     const handleEditorChnage = (html) => {
-
         setEditorHtml(html);
         console.log(editorHtml);
         console.log(html)
@@ -184,10 +186,17 @@ const Create_article = ({ gun, user, loggedIn, setLoggedIn }) => {
         try {
             if (!selectedFile) return;
             const formData = new FormData();
-            formData.append("myImage", selectedFile);
-            const { data } = await axios.post('/api/image', formData);
-            _data = data;
+            formData.append("file", selectedFile);
+            formData.append('upload_preset', 'news-images');
 
+            const data = await fetch('https://api.cloudinary.com/v1_1/df93uxoek/image/upload', {
+                method: 'POST',
+                body: formData
+            }).then(r => r.json());
+
+
+            console.log(data);
+            _data = data.secure_url;
 
         } catch (error) {
             console.log(error.response?.data);
