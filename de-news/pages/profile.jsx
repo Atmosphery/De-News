@@ -25,10 +25,15 @@ const Profile = (props) => {
     }, [router]);
 
     let profile = { username: '', articles: [] };
-    const username = useState(sessionStorage.getItem('currentUsername'));
+    const [username, setUsername] = useState();
     const [articles, setArticles] = useState(profile.articles);
     const [reactArticles, setReactArticles] = useState([]);
-    //
+    
+    useEffect(() => {
+        if (window) {
+            setUsername(sessionStorage.getItem('currentUsername'));
+        }
+    }, []);
 
     const checkExising = (existingArticles, id) => {
 
