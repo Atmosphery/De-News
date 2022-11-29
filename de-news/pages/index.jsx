@@ -15,6 +15,10 @@ import SearchBar from "../components/SearchBar";
 //{gun, user, setUser}: IProps
 const Index = ({ gun, user, loggedIn, setLoggedIn }) => {
 
+  user.once((data) => {
+    console.log(data);
+  })
+
   const articles = []
   const [reactArticles, setReactArticles] = useState([]);
   //
