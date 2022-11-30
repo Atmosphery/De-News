@@ -3,36 +3,24 @@ import 'gun/sea';
 import { useRouter } from "next/router"
 import { useState } from "react";
 import Article from "../../components/NormalArticle";
-import _ from 'lodash'
+import _, { set } from 'lodash'
 import { useEffect } from "react";
 import React from "react";
 require('gun/lib/unset.js')
 require('gun/lib/path.js')
 
 
-const ProfileView = (props) => {
+const ProfileView = ({ gun }) => {
 
     const router = useRouter();
-    var [pub, setPub] = useState();
+    let pub;
 
-    useEffect(() => {
-        if (router && router.query) {
-            console.log(router.query);
-            setPub(router.query.pub);
-        }
 
-        props.gun.user(router.query.pub).get('alias').on((a) => {
-            console.log(a);
-            setUsername(a);
-        });
-    }, [router]);
-
-    let profile = { username: '', articles: [] };
-    const [username, setUsername] = useState();
-    const [articles, setArticles] = useState(profile.articles);
+    const articles = []
     const [reactArticles, setReactArticles] = useState([]);
+    const [username, setUsername] = useState();
+    //
 
-    
     const checkExising = (existingArticles, id) => {
 
         //debugger
@@ -45,44 +33,76 @@ const ProfileView = (props) => {
         return false;
     }
 
-
-
     useEffect(() => {
-        (async function () {
-            const existingArticles = []
-            await props.gun.get('articles').map(article => article !== null ? article : undefined).on((article, id) => {
-                const doesExist = checkExising(existingArticles, id);
+        if (router && router.query) {
+            console.log(router.query.pub);
+            pub = router.query.pub;
+            gun.user(router.query.pub).get('alias').once(async (a) => {
+                console.log(a);
+                await setUsername(a);
 
-                if (article !== null && article.user === pub && !doesExist) {
-                    existingArticles.push(id);
-                    article.id = id;
-                    console.log(article, id);
-                    profile.articles.push(article);
-                }
             });
+            const existingArticles = [];
+
+            (async function () {
+                await gun.get('articles').map(article => article !== null ? article : undefined).on((article, id) => {
+                    
+
+                    const doesExist = checkExising(existingArticles, id);
+
+                    if (article !== null && article.user === router.query.pub && !doesExist) {
+                        existingArticles.push(id);
+                        article.id = id;
+                        console.log(article, id);
+                        articles.push(article);
+
+                    }
+                });
 
 
-            console.log(articles.length, 'article state');
-            const rArticles = profileInit();
-            console.log(rArticles.length, 'rArticles')
-            setReactArticles(rArticles);
-
-        })
-            ();
+                console.log(articles.length, 'article state');
+                const rArticles = profileInit();
+                console.log(rArticles.length, 'rArticles')
+                setReactArticles(rArticles);
 
 
+            })
+                ();
 
-    }, [articles, pub])
+        }
 
+
+
+
+    }, [router]);
+
+
+
+
+    function shuffleArray(array) {
+        for (var i = array.length - 1; i > 0; i--) {
+
+            // Generate random number
+            var j = Math.floor(Math.random() * (i + 1));
+
+            var temp = array[i];
+            array[i] = array[j];
+            array[j] = temp;
+        }
+
+        return array;
+    }
 
     const profileInit = () => {
 
-        const tempArticles = [];
+        var tempArticles = [];
         for (let i = 0; i < articles.length; i++) {
             const article = articles[i];
+            //console.log(article.text)
             tempArticles.push(
                 <Article
                     author={article.author}
+                    thumbnail={article.thumbnail}
                     date={article.date}
                     user={article.user}
                     id={_.get(article, "_.#", undefined)}
@@ -92,6 +112,7 @@ const ProfileView = (props) => {
                 />
             );
         }
+        tempArticles = shuffleArray(tempArticles);
         return tempArticles;
     }
 
