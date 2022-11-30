@@ -8,7 +8,7 @@ import { themeChange } from 'theme-change'
 import { useEffect } from 'react'
 import SearchBar from './SearchBar';
 import { useState } from 'react';
-import {useRouter} from 'next/router'
+import { useRouter } from 'next/router'
 
 
 
@@ -23,7 +23,10 @@ const AppBar = (props) => {
         "Cupcake",
         "Forest",
         "Aqua",
-        "Light",
+        "Black",
+        "Luxury",
+        "Halloween",
+        "Night"
     ]
 
 
@@ -88,7 +91,7 @@ const AppBar = (props) => {
 
     return (
 
-        <nav className='sticky navbar inline-flex z-10 shadow-xl bg-base-300 bg-opacity-95'>
+        <nav className='sticky top-0 navbar inline-flex z-10 shadow-xl bg-base-300 bg-opacity-95'>
             <div className='navbar-start'>
                 <div className='dropdown'>
                     <label tabIndex={0} className='btn bg-base-100 btn-circle border-base-200'>
@@ -103,11 +106,12 @@ const AppBar = (props) => {
                     <button className='ml-10 hover:text-blue-500 text-base-content text-3xl font-bold'>De-News!</button>
                 </Link>
             </div>
-
-            <SearchBar placeholder={"Search"} gun={props.gun.get('articles')} />
+            <div className='navbar-center'>
+                <SearchBar placeholder={"Search"} gun={props.gun.get('articles')} />
+            </div>
 
             <div className='navbar-end'>
-                
+
                 <select className="select" data-choose-theme>
                     <option disabled value="">Pick a theme</option>
                     <option value="">Default Value</option>
@@ -115,8 +119,8 @@ const AppBar = (props) => {
                         <option key={value.toLowerCase()} value={value.toLowerCase()}>{value}</option>
                     ))}
                 </select>
-                
-                
+
+
 
 
                 <div className='dropdown dropdown-end ml-5'>

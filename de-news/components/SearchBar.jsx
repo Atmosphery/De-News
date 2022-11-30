@@ -5,7 +5,7 @@ import { AiOutlineSearch, AiOutlineClose } from 'react-icons/ai'
 import style from '../styles/search.module.css'
 
 
-const SearchBar = ({ placeholder, gun}) => {
+const SearchBar = ({ placeholder, gun }) => {
     const [filteredData, setFilteredData] = useState([]);
     const [wordEntered, setWordEntered] = useState("");
 
@@ -35,27 +35,29 @@ const SearchBar = ({ placeholder, gun}) => {
     };
 
     return (
-        <div className="ml-5 -z-50">
-            <div>
-                <input
-                    type="text"
-                    placeholder={placeholder}
-                    value={wordEntered}
-                    onChange={handleFilter}
-                    className={'input input-primary '}
-                />
-            </div>
+        <div className="ml-5 dropdown">
+            <input
+                type="text"
+                placeholder={placeholder}
+                value={wordEntered}
+                onChange={handleFilter}
+                className={'input input-primary '}
+            />
+
             {filteredData.length != 0 && (
-                <div className="z-0">
-                    {filteredData.slice(0, 15).map((value, key) => {
+                <div className="dropdown-content rounded-md overflow-auto list-none mt-3 w-[300px] max-h-52 p-1  bg-base-300">
+                    {filteredData.map((value, key) => {
                         return (
                             <Link href={`/article/${value['_']['#']}`}>
-                                <p className="mt-5 alert text-ellipsis">{value.title}</p>
+                                <p className="mb-1 mr-[6px] border border-primary rounded-md overflow-hidden whitespace-nowrap text-ellipsis">{value.title}</p>
                             </Link>
                         );
                     })}
                 </div>
             )}
+
+
+
         </div>
     );
 }
