@@ -114,7 +114,7 @@ const AppBar = (props) => {
 
                 <select className="select" data-choose-theme>
                     <option disabled value="">Pick a theme</option>
-                    <option value="">Default Value</option>
+                    <option value="">Default Theme</option>
                     {themeValues.map((value) => (
                         <option key={value.toLowerCase()} value={value.toLowerCase()}>{value}</option>
                     ))}

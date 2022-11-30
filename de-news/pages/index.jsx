@@ -42,7 +42,6 @@ const Index = ({ gun, user, loggedIn, setLoggedIn }) => {
         if (article !== null && !doesExist) {
           existingArticles.push(id);
           article.id = id;
-          console.log(article, id);
           articles.push(article);
 
         }

@@ -15,9 +15,6 @@ import { useEffect } from 'react';
 const Article = (props) => {
 
 
-
-
-
     const [thumbnail, setThumbnail] = useState('');
 
     useEffect(() => {
@@ -25,8 +22,6 @@ const Article = (props) => {
             setThumbnail(<figure><img className='object-contain rounded-2xl ' src={props.thumbnail} alt='' /></figure>)
         }
     }, [])
-
-
 
     return (
             <div className="break-inside-avoid m-5 card 
@@ -52,22 +47,5 @@ const Article = (props) => {
             </div>
     )
 }
-
-//<div className='m-10 flex flex-col items-center hover:border rounded-2xl border-primary card p-5 max-w-lg shadow-xl bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 '>
-//     {thumbnail}
-//     <div className={''}>
-//         <Link href={`/article/${props.id}`}>
-//             <h1 id='title' className='text-3xl' >{props.title}</h1>
-//         </Link>
-//         <div className='card-actions flex items-end'>
-//             <div className='flex-1'>
-//                 <Link id='author' className='flex link link-primary' href={`/profile/${props.user}`}>
-//                     <p className='mr-2'>By:</p>{props.author}
-//                 </Link>
-//                 <div className='flex'><p className='mr-2'>Posted:</p><p id='date'>{props.date}</p></div>
-//             </div>
-//         </div>
-//     </div>
-// </div>
 
 export default Article;
