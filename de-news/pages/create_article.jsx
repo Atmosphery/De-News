@@ -30,15 +30,7 @@ const Create_article = ({ gun, user, loggedIn, setLoggedIn }) => {
 
     const router = useRouter();
 
-    useEffect(() => {
-        if (router && router.query) {
-            console.log(router.query);
-            if (!user.is) {
-
-                router.push('/login');
-            }
-        }
-    }, [router]);
+    
 
     const modules = useMemo(
         () => ({
@@ -105,7 +97,7 @@ const Create_article = ({ gun, user, loggedIn, setLoggedIn }) => {
     const [editorHtml, setEditorHtml] = useState('</br></br></br></br></br></br></br></br></br></br></br></br></br></br></br>');
     const [articleAdded, setArticleAdded] = useState(<div></div>);
 
-    let username;
+    const [username, setUsername] = useState();
     let _data;
 
     const [uploading, setUploading] = useState(false);
@@ -113,9 +105,24 @@ const Create_article = ({ gun, user, loggedIn, setLoggedIn }) => {
     const [selectedFile, setSelectedFile] = useState();
 
     useEffect(() => {
-        username = sessionStorage.getItem('currentUsername');
-        console.log(username)
-    })
+        if (router && router.query) {
+            console.log(router.query);
+            if (!user.is) {
+
+                router.push('/login');
+            }
+        }
+
+        (async function () {
+            await gun.user(router.query.pub).get('alias').on((a) => {
+                console.log(a);
+                setUsername(a);
+            });
+        })
+        ();
+        
+    }, [router]);
+    
 
     const saveArticle = async (event) => {
         event.preventDefault();
@@ -133,6 +140,9 @@ const Create_article = ({ gun, user, loggedIn, setLoggedIn }) => {
         
         console.log(_data);
 
+        if(_data === undefined) {
+            _data = '';
+        }
 
         article = {
             id: '',

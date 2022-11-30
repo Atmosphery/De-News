@@ -17,11 +17,11 @@ function MyApp({ Component, pageProps }) {
     ]
   });
 
-  let user = gun.user();
+  
 
   gun = gun.get('deNewsDb');
 
-  user.recall({ sessionStorage: true })
+  let user = gun.user().recall({ sessionStorage: true })
   let [loggedIn, setLoggedIn] = useState(false);
 
 

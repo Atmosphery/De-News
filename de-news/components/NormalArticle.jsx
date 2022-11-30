@@ -29,7 +29,12 @@ const Article = (props) => {
 
 
     return (
-            <div className="m-5 card card-compact w-96 bg-base-200 shadow-md hover:border rounded-2xl border-primary justify-center">
+            <div className="break-inside-avoid m-5 card 
+            card-compact w-96 bg-base-200 
+            shadow-md 
+            rounded-2xl border border-transparent 
+            hover:border hover:rounded-2xl hover:border-primary 
+            justify-center">
                 <Link href={`/article/${props.id}`}>
                     {thumbnail}
                     <div className="card-body">

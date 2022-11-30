@@ -20,19 +20,19 @@ const ProfileView = (props) => {
             console.log(router.query);
             setPub(router.query.pub);
         }
+
+        props.gun.user(router.query.pub).get('alias').on((a) => {
+            console.log(a);
+            setUsername(a);
+        });
     }, [router]);
 
     let profile = { username: '', articles: [] };
     const [username, setUsername] = useState();
     const [articles, setArticles] = useState(profile.articles);
     const [reactArticles, setReactArticles] = useState([]);
-    
-    useEffect(() => {
-        if (window) {
-            setUsername(sessionStorage.getItem('currentUsername'));
-        }
-    }, []);
 
+    
     const checkExising = (existingArticles, id) => {
 
         //debugger

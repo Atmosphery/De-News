@@ -35,7 +35,7 @@ const SearchBar = ({ placeholder, gun}) => {
     };
 
     return (
-        <div className="ml-5">
+        <div className="ml-5 -z-50">
             <div>
                 <input
                     type="text"
@@ -46,7 +46,7 @@ const SearchBar = ({ placeholder, gun}) => {
                 />
             </div>
             {filteredData.length != 0 && (
-                <div >
+                <div className="z-0">
                     {filteredData.slice(0, 15).map((value, key) => {
                         return (
                             <Link href={`/article/${value['_']['#']}`}>

@@ -88,7 +88,7 @@ const AppBar = (props) => {
 
     return (
 
-        <nav className='sticky top-0 navbar z-10 shadow-xl bg-base-300 bg-opacity-95'>
+        <nav className='sticky navbar inline-flex z-10 shadow-xl bg-base-300 bg-opacity-95'>
             <div className='navbar-start'>
                 <div className='dropdown'>
                     <label tabIndex={0} className='btn bg-base-100 btn-circle border-base-200'>
@@ -104,6 +104,7 @@ const AppBar = (props) => {
                 </Link>
             </div>
 
+            <SearchBar placeholder={"Search"} gun={props.gun.get('articles')} />
 
             <div className='navbar-end'>
                 
@@ -114,6 +115,8 @@ const AppBar = (props) => {
                         <option key={value.toLowerCase()} value={value.toLowerCase()}>{value}</option>
                     ))}
                 </select>
+                
+                
 
 
                 <div className='dropdown dropdown-end ml-5'>
@@ -131,7 +134,7 @@ const AppBar = (props) => {
 
 
             <Link href={'/create_article'}>
-                <button className='btn bg-base-100 border-base-200 text-sm ml-5 mr-5'>Post an article!</button>
+                <button className='btn bg-base-100 border-base-200 text-sm ml-5 mr-20'>Post an article!</button>
             </Link>
         </nav>
     );

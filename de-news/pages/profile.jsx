@@ -13,6 +13,7 @@ require('gun/lib/path.js')
 const Profile = (props) => {
 
     const router = useRouter();
+    const pub = props.user.is?.pub;
 
     useEffect(() => {
         if (router && router.query) {
@@ -22,6 +23,11 @@ const Profile = (props) => {
                 router.push('/login');
             }
         }
+
+        props.gun.user(router.query.pub).get('alias').on((a) => {
+            console.log(a);
+            setUsername(a);
+        });
     }, [router]);
 
     let profile = { username: '', articles: [] };
@@ -29,11 +35,7 @@ const Profile = (props) => {
     const [articles, setArticles] = useState(profile.articles);
     const [reactArticles, setReactArticles] = useState([]);
     
-    useEffect(() => {
-        if (window) {
-            setUsername(sessionStorage.getItem('currentUsername'));
-        }
-    }, []);
+   
 
     const checkExising = (existingArticles, id) => {
 
@@ -90,7 +92,20 @@ const Profile = (props) => {
 
     }, [articles])
 
-    const pub = props.user.is?.pub;
+    props.gun.user(pub).once((e)=>{
+        console.log(e);
+    });
+    
+
+    const deleteAccount = () => {
+        const user = props.gun.user();
+        user.delete('abecc', 'password', (e)=>{
+            console.log(e);
+        })
+        
+    }
+
+
 
 
 
@@ -105,6 +120,7 @@ const Profile = (props) => {
                     <h2><strong>Your Articles</strong></h2>
                     {reactArticles}
                 </div>
+                <button onClick={deleteAccount}>Delete Account</button>
             </div>
 
         </main>

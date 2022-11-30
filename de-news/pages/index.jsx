@@ -15,9 +15,6 @@ import SearchBar from "../components/SearchBar";
 //{gun, user, setUser}: IProps
 const Index = ({ gun, user, loggedIn, setLoggedIn }) => {
 
-  user.once((data) => {
-    console.log(data);
-  })
 
   const articles = []
   const [reactArticles, setReactArticles] = useState([]);
@@ -100,23 +97,29 @@ const Index = ({ gun, user, loggedIn, setLoggedIn }) => {
     return tempArticles;
   }
 
+  const resetArticles = () => {
+    gun.get('articles').map().once((data, id) => {
+      gun.get('articles').get(id).put(null);
+    });
+  }
+
   return (
     <main>
-      <div className="flex">
-        <div className="items-center z-0">
-          <h1 className='font-bold underline ml-5'>The News</h1>
-          <div className="gap-8 columns-4">
-            {reactArticles}
-          </div>
 
+      <div className="flex flex-col items-center">
+        <h1 className='font-bold underline ml-5 '>The News</h1>
+        <div className="gap-8 columns-4 mt-20">
+          {reactArticles}
         </div>
 
-        <div className="flex-none max-w-xs">
-          <div className="mt-5 mr-5">
-            <SearchBar placeholder={"Search"} gun={gun.get('articles')} />
-          </div>
+      </div>
+
+      <div className="flex-none max-w-xs">
+        <div className="mt-5 mr-5">
         </div>
       </div>
+
+      <button onClick={resetArticles} className='btn btn-sm'>Reset Articles</button>
     </main>
   );
 }

@@ -21,7 +21,7 @@ const Login = (props) => {
 
         let elements = event.currentTarget.elements;
         //elements.username.value
-        await props.user.auth('OGJuWfIQD6sej2VT70HmpmQinH_umfPHck4vyNvvxWs.y1mqXfallwgL10DX8rj8HlMdErokevY8yNED0NUCzQE', elements.password.value, (ack) => {
+        await props.user.auth(elements.username.value, elements.password.value, (ack) => {
             if (ack.err) {
                 setWrongPasswordReact(<h2 className='text-red-700'>Incorrect Password or Username!</h2>)
                 console.log('wrong password')
