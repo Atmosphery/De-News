@@ -13,7 +13,7 @@ import SearchBar from "../components/SearchBar";
 
 //const gun: IGunInstance = Gun('localhost:8765')
 //{gun, user, setUser}: IProps
-const Index = ({ gun, user, loggedIn, setLoggedIn }) => {
+const Index = ({ gun }) => {
 
 
   const articles = []

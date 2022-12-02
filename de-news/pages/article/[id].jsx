@@ -33,7 +33,7 @@ const ArticleView = ({ gun, user, loggedIn, setLoggedIn }) => {
             </div>
             <div className='flex items-center ml-10'>
                 <div className='flex-1'>
-                    <Link id='author' className='flex hover:text-blue-700' href={`/profile/${currentArticle.user}`}>
+                    <Link id='author' className='flex link link-primary' href={`/profile/${currentArticle.user}`}>
                         <p className='mr-2'>By:</p>{currentArticle.author}
                     </Link>
                     <div className='flex'><p className='mr-2'>Posted:</p><p id='date'>{currentArticle.date}</p></div>
