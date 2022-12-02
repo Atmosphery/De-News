@@ -13,7 +13,7 @@ function MyApp({ Component, pageProps }) {
   let gun = new Gun({
     peers: [
       "https://gun-manhattan.herokuapp.com/gun",
-      "https://gunjs-mtl.herokuapp.com/gun"
+      "https://gun-us.herokuapp.com/gun"
     ]
   });
 
