@@ -93,15 +93,7 @@ const AppBar = (props) => {
 
         <nav className='sticky top-0 navbar inline-flex z-10 shadow-xl bg-base-300 bg-opacity-95'>
             <div className='navbar-start'>
-                <div className='dropdown'>
-                    <label tabIndex={0} className='btn bg-base-100 btn-circle border-base-200'>
-                        <HiMenuAlt1 size={25} />
-                    </label>
-                    <ul tabIndex={0} className='menu dropdown-content mt-3 p-3 shadow rounded-box w-52'>
-                        <li><Link href={'/'}>Homepage</Link></li>
-                        <li><a>Article of the Day</a></li>
-                    </ul>
-                </div>
+
                 <Link href='/'>
                     <button className='ml-10 hover:text-blue-500 text-base-content text-3xl font-bold'>De-News!</button>
                 </Link>
@@ -128,10 +120,17 @@ const AppBar = (props) => {
                         <CgProfile size={45} />
                     </label>
 
-                    <ul tabIndex={0} className='menu bg-base-100 dropdown-content rounded-box w-48 mt-3 shadow-2xl'>
-                        <li><Link href={'/profile'}>Profile</Link></li>
-                        <li><Link href={'/login'}>Your Articles</Link></li>
-                        <li><button onClick={handleLoginbtnClick}>{(props.loggedIn) ? 'Sign out' : 'Login'}</button></li>
+                    <ul tabIndex={0} className='menu bg-base-200 dropdown-content rounded-box w-48 mt-3 shadow-2xl'>
+                        <li ><Link href={'/profile'}>Profile</Link></li>
+                        {(!props.loggedIn) ?
+                            <li className='bg-base-200'><Link href={'/login'}><button>Login</button></Link></li> :
+                            <li className='bg-base-200'><button onClick={Logout}>Sign Out</button></li>
+                        }
+
+                        {(!props.loggedIn) ?
+                            <li><Link href={'/signup'}><button onClick={handleLoginbtnClick}>Sign Up</button></Link></li> :
+                            <></>
+                        }
                     </ul>
                 </div>
             </div>
