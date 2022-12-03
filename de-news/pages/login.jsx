@@ -46,17 +46,17 @@ const Login = (props) => {
                         <div>
 
                             <div className="mb-5">
-                                <label>Username</label><br />
+                                <label className='text-2xl'>Username</label><br />
                                 <input name="username" className='input input-bordered max-w-xs' />
                             </div>
                             <div>
-                                <label>Password</label><br />
+                                <label className='text-2xl'>Password</label><br />
                                 <input type='password' name="password" className='input input-bordered max-w-xs' />
                                 {wrongPasswordReact}
                             </div>
 
                             <div>
-                                <button className='btn mt-4'>Login</button>
+                                <button className='btn mt-4 text-xl'>Login</button>
                             </div>
                             <div className="mt-5">
                                 <Link href={'/signup'}><strong>Dont't have an account?</strong></Link>
