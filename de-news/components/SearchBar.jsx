@@ -49,7 +49,7 @@ const SearchBar = ({ placeholder, gun }) => {
                     {filteredData.map((value, key) => {
                         return (
                             <Link href={`/article/${value['_']['#']}`}>
-                                <p className="mb-1 mr-[6px] border border-primary rounded-md overflow-hidden whitespace-nowrap text-ellipsis">{value.title}</p>
+                                <p className="mb-1 mr-[6px] shadow-md rounded-xl overflow-hidden whitespace-nowrap text-ellipsis bg-base-200">{value.title}</p>
                             </Link>
                         );
                     })}

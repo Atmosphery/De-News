@@ -10,7 +10,7 @@ import Router from "next/router";
 
 
 class Signup extends Component {
-    
+
     constructor(props) {
         super(props);
     }
@@ -33,27 +33,32 @@ class Signup extends Component {
 
     render() {
         return (
-            <main>
-            <div className="m-5">
-                <form className="flex-row" onSubmit={this.signup}>
-                    <div>
+            <main className="flex justify-center text-center">
+                <div>
+                    <p className='mt-5 text-5xl'>Sign Up</p>
+                    <div className="p-5 mt-10 w-96 bg-base-200 shadow-md rounded-2xl border border-transparent">
+                        <form onSubmit={this.signup}>
+                            <div>
+                                <div className="mb-5">
+                                    <label className="text-2xl">Username</label><br />
+                                    <input name="username" className='input input-bordered max-w-xs' />
+                                </div>
+                                <div>
+                                    <label className="text-2xl">Password</label><br />
+                                    <input type='password' name="password" className='input input-bordered max-w-xs' />
+                                </div>
+                                <div>
+                                    <button className='btn mt-4 text-xl'>Sign up</button>
+                                </div>
+                                <div className="mt-5">
+                                    <Link href={'/login'}><strong>Already have an account?</strong></Link>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
 
-                        <label>Username</label><br />
-                        <input name="username" className='input input-bordered max-w-xs' />
-                    </div>
-                    <div>
-                        <label>Password</label><br />
-                        <input type='password' name="password" className='input input-bordered max-w-xs' />
-                    </div>
-                    <div>
-                        <button className='btn mt-4'>Sign up</button>
-                    </div>
-                    <div className="mt-5">
-                        <Link href={'/login'}><strong>Already have an account?</strong></Link>
-                    </div>
-                </form>
-            </div>
-        </main>
+            </main>
 
         )
     }
