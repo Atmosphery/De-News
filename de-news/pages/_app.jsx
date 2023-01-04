@@ -1,5 +1,5 @@
 import '../styles/globals.css'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import Gun from 'gun';
 import { initializeGun } from './api/GunApi' // this import keeps user from being undefined even though it is not being used????
 import 'react-quill/dist/quill.snow.css'
