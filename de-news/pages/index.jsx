@@ -92,7 +92,6 @@ const Index = ({ gun }) => {
         />
       );
     }
-    tempArticles = shuffleArray(tempArticles);
     return tempArticles;
   }
 

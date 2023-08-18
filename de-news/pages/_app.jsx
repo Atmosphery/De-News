@@ -25,10 +25,6 @@ function MyApp({ Component, pageProps }) {
   let [loggedIn, setLoggedIn] = useState(false);
 
 
-
-
-
-
   return (
     <Layout gun={gun} user={user} loggedIn={loggedIn} setLoggedIn={setLoggedIn}>
       <Component
